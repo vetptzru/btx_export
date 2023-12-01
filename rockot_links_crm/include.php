@@ -1,12 +1,7 @@
-<?php
-AddEventHandler('crm', 'OnBeforeCrmDealUpdate', 'myDealViewHandler');
-
-function myDealViewHandler(&$arFields) {
-    forDebug();
-}
-
-
-function forDebug() {
-  $file = "/Applications/MAMP/htdocs/local/___out__.txt";
-  file_put_contents($file, $person, FILE_APPEND);
-}
+<?
+Bitrix\Main\Loader::registerAutoloadClasses(
+    'rockot_links_crm',
+    array(
+        'RockotLinksCRM\\Main' => 'lib/Main.php',
+    )
+);
