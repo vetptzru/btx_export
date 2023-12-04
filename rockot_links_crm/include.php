@@ -6,32 +6,70 @@ class CRockotEventHandlers
 {
 	public static function OnBeforeProlog()
 	{
-    CRockotEventHandlers::modifyDealPage();
+		$type = CRockotEventHandlers::getPageType();
+		if ($type == 'deal') {
+			CRockotEventHandlers::modifyDealPage();
+			return;
+		}
+		if ($type === 'group') {
+			CRockotEventHandlers::modifyGroupPage();
+			return;
+		}
 	}
 
 	public static function OnProlog() {}
 
-
+	//------
+	public static function modifyGroupPage() {
+		$groupId = CRockotEventHandlers::getPageId();
+		if (!$groupId) {
+			return;
+		}
+		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
+		CRockotEventHandlers::addLinkToGroupMenu("/company/personal/user/1/disk/path/", "Диск");
+		CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
+		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
+	}
 	//------
 	public static function modifyDealPage() {
-		$dealId = CRockotEventHandlers::getDealId();
-		$isDealIframe = CRockotEventHandlers::getDealId();
+		$dealId = CRockotEventHandlers::getPageId();
+		$isDealIframe = CRockotEventHandlers::isDealIframe();
 		if (!$dealId || !$isDealIframe) {
 			return;
 		}
-		// ню "Сделка", "Диск", "Чат" - В сделке добавить ссылки на "Проект", "Диск", "БП сделки"
+		CRockotEventHandlers::addLinkToMenu("", "Проект");
+		CRockotEventHandlers::addLinkToMenu("", "Диск");
+		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
+	}
+
+	//------
+	public static function addLinkToGroupMenu($link, $title) {
 		?>
 		<script>
         document.addEventListener('DOMContentLoaded', function() {
-						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate()?>`;
+						const customCardHtml = `<?=CRockotEventHandlers::getGroupLinkTemplate($link, $title)?>`;
+						const container = document.querySelector(".main-buttons-inner-container");
+						console.log(container);
+						if (container) {
+							container.insertAdjacentHTML('beforeend', customCardHtml);
+						}
+        });
+    </script>
+		<?
+	}
+
+	public static function addLinkToMenu($link, $title) {
+		?>
+		<script>
+        document.addEventListener('DOMContentLoaded', function() {
+						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate($link, $title)?>`;
 						const container = document.querySelector("#crm_scope_detail_c_deal_");
 						if (container) {
 							container.insertAdjacentHTML('beforeend', customCardHtml);
 						}
         });
     </script>
-		<?php
-		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
+		<?
 	}
 
 
@@ -41,25 +79,44 @@ class CRockotEventHandlers
 		return $qwe["IFRAME"] == "Y";
 	}
 
-	public static function getDealId() {
-		global $APPLICATION;
-		$currentUrl = $APPLICATION->GetCurPage();
-		_print_($currentUrl);
-		$urlParts = explode('/', $currentUrl);
-		$dealId = $urlParts[count($urlParts) - 2];
-		return $dealId;
+	public static function getPageType() {
+		return CRockotEventHandlers::getInfoByURL()["type"];
 	}
 
-	public static function getDealLinkTemplate() {
+	public static function getPageId() {
+		return CRockotEventHandlers::getInfoByURL()["id"];
+	}
+
+	public static function getInfoByURL() {
+		global $APPLICATION;
+		$currentUrl = $APPLICATION->GetCurPage();
+		$urlParts = explode('/', $currentUrl);
+		$page = $urlParts[count($urlParts) - 4];
+		$type = $urlParts[count($urlParts) - 3];
+		$dealId = $urlParts[count($urlParts) - 2];
+		$result = ["type" => $type, "id" => $dealId];
+		if ($page === "deal") {
+			$result["type"] = "deal";
+		} else if ($page === "group") {
+			$result["type"] = "group";
+		}
+		return $result;
+	}
+
+	public static function getGroupId() {
+
+	}
+
+	public static function getDealLinkTemplate($link, $title) {
 		return '
 			<div class="main-buttons-item"  title="">
-				<a href="/workgroups/group/" class="main-buttons-item-link">
+				<a href="'.$link.'" class="main-buttons-item-link">
 					<span class="main-buttons-item-icon"></span>
 					<span class="main-buttons-item-text">
 						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
 						<span class="main-buttons-item-text-title">
 							<span class="main-buttons-item-text-box">
-								Группы
+								'.$title.'
 								<span class="main-buttons-item-menu-arrow">
 							</span>
 						</span>
@@ -70,6 +127,26 @@ class CRockotEventHandlers
 				<span class="main-buttons-item-counter"></span>
 			</a>
 		</div>';
+	}
+
+	//---------
+
+	public static function getGroupLinkTemplate($link, $title) {
+		return '
+			<div class="main-buttons-item tasks_role_link" id="" data-disabled="false" data-class="" data-id="view_role_auditor" data-locked="" data-top-menu-id="group_panel_menu_1" data-parent-item-id="view_all" title="" draggable="true" tabindex="-1" data-link="item-jco2rlut">
+				<a class="main-buttons-item-link" href="'.$link.'">
+					<span class="main-buttons-item-icon"></span><span class="main-buttons-item-text">
+						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
+						<span class="main-buttons-item-text-title">
+							<span class="main-buttons-item-text-box">'.$title.'</span>
+						</span>
+						<span class="main-buttons-item-edit-button" data-slider-ignore-autobinding="true"></span>
+						<span class="main-buttons-item-text-marker"></span>
+					</span>
+					<span class="main-buttons-item-counter"></span>
+				</a>
+			</div>
+		';
 	}
 
 }
