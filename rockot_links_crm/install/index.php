@@ -43,9 +43,10 @@ Class rockot_links_crm extends CModule
 	}
 
 	public function installEvents() {
-		EventManager::getInstance()->registerEventHandler('main', 'OnBeforeEndBufferContent' ,$this->MODULE_ID ,'RockotLinksCRM\\Main' ,'appendJavaScriptAndCSS');
-		EventManager::getInstance()->registerEventHandler('main', 'OnBeforeProlog' ,$this->MODULE_ID ,'RockotLinksCRM\\Main' ,'log');
-		EventManager::getInstance()->registerEventHandler('main', 'OnProlog' ,$this->MODULE_ID ,'RockotLinksCRM\\Main' ,'log');
+		$eventManager = \Bitrix\Main\EventManager::getInstance();
+		$eventManager->registerEventHandler("main", "OnBeforeProlog", "rockot_links_crm", "CRockotEventHandlers", "OnBeforeProlog", 49);		
+		$eventManager->registerEventHandler("main", "OnProlog", "rockot_links_crm", "CRockotEventHandlers", "OnProlog", 49);
+
 	}
 
 	public function installFiles() {
@@ -81,9 +82,9 @@ Class rockot_links_crm extends CModule
 	}
 
 	public function uninstallEvents() {
-		EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeEndBufferContent', $this->MODULE_ID, 'RockotLinksCRM\\Main', 'appendJavaScriptAndCSS');
-		EventManager::getInstance()->unRegisterEventHandler("main", "OnBeforeProlog",  $this->MODULE_ID, 'RockotLinksCRM\\Main', 'log');
-		EventManager::getInstance()->unRegisterEventHandler('main', 'OnProlog' ,$this->MODULE_ID ,'RockotLinksCRM\\Main' ,'log');
+		$eventManager = \Bitrix\Main\EventManager::getInstance();
+		$eventManager->unRegisterEventHandler("main", "OnBeforeProlog", "rockot_links_crm", "CRestEventHandlers", "OnBeforeProlog");
+		$eventManager->unRegisterEventHandler("main", "OnProlog", "rockot_links_crm", "CRestEventHandlers", "OnProlog");
 	}
 
 }
