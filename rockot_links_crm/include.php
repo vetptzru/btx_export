@@ -24,7 +24,7 @@ class CRockotEventHandlers
 		<script>
         document.addEventListener('DOMContentLoaded', function() {
 						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate()?>`;
-						const container = document.querySelector(".main-buttons-inner-container");
+						const container = document.querySelector("#crm_scope_detail_c_deal_");
 						if (container) {
 							container.insertAdjacentHTML('beforeend', customCardHtml);
 						}
@@ -53,13 +53,13 @@ class CRockotEventHandlers
 	public static function getDealLinkTemplate() {
 		return '
 			<div class="main-buttons-item"  title="">
-				<span class="main-buttons-item-link">
+				<a href="/workgroups/group/" class="main-buttons-item-link">
 					<span class="main-buttons-item-icon"></span>
 					<span class="main-buttons-item-text">
 						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
 						<span class="main-buttons-item-text-title">
 							<span class="main-buttons-item-text-box">
-								БП сделки
+								Группы
 								<span class="main-buttons-item-menu-arrow">
 							</span>
 						</span>
@@ -68,7 +68,7 @@ class CRockotEventHandlers
 					<span class="main-buttons-item-text-marker"></span>
 				</span>
 				<span class="main-buttons-item-counter"></span>
-			</span>
+			</a>
 		</div>';
 	}
 
