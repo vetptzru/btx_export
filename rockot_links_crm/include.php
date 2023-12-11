@@ -162,7 +162,7 @@ function getItemById($itemId) {
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        // print_r($arGroup);
+        print_r($arGroup);
     }
 	}
 }
@@ -183,6 +183,10 @@ function getDiskByGroupId($groupId) {
 	}
 	//
 	//https://dev24.icstar.ru/workgroups/group/46/disk/path/
+	//https://dev24.icstar.ru/workgroups/group/208/
+	// 5025
+	// https://dev24.icstar.ru/online/?IM_DIALOG=chat5025
+	// https://dev24.icstar.ru/workgroups/group/208/tasks/
 }
 
 function _print_($mes) {
