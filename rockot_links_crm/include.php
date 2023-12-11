@@ -50,6 +50,7 @@ class CRockotEventHandlers
 		CRockotEventHandlers::addLinkToMenu("", "Диск");
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 		//-----
+		echo "<pre>";
 		CModule::IncludeModule('crm');
 
 		$dbRes = CCrmDeal::GetListEx(
@@ -68,7 +69,7 @@ class CRockotEventHandlers
 
 
 		$deal = CCrmDeal::GetByID($dealId);
-		echo "<pre>";
+		
 		var_dump($deal);
 		echo "</pre>";
 	}
