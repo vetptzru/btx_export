@@ -165,7 +165,7 @@ function getItemById($itemId) {
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        print_r($arGroup);
+        // print_r($arGroup);
     }
 	}
 	$deal = getDealForGroup($itemId);
