@@ -177,6 +177,9 @@ function getItemById($itemId) {
         print_r($arGroup);
     }
 	}
+
+	die();
+
 }
 
 function getDiskByGroupId($groupId) {
