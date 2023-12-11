@@ -57,11 +57,13 @@ class CRockotEventHandlers
 				[], // или другой фильтр, соответствующий вашим требованиям
 				false,
 				false,
-				["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
+				// ["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
+				[]
 		);
 		while ($deal = $dbRes->Fetch()) {
 				// Обработка каждой сделки
-				echo "Сделка: " . $deal['TITLE'] . "<br>";
+				// echo "Сделка: " . $deal['TITLE'] . "<br>";
+				var_dump($deal);
 		}
 
 
