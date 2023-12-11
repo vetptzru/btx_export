@@ -178,6 +178,14 @@ function getItemById($itemId) {
     }
 	}
 
+	$result = restCommand('im.chat.get', Array(
+		'ENTITY_TYPE' => 'CRM',
+		'ENTITY_ID' => 'GROUP|208',
+		
+ ), $_REQUEST["auth"]);
+
+ print_r($result);
+
 	echo "</pre>";
 
 	die();
