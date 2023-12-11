@@ -160,6 +160,11 @@ class CRockotEventHandlers
 
 function getItemById($itemId) {
 	echo "123132123123123123";
+
+	$arGroups = CUser::GetUserGroup($itemId);
+	echo "<pre>"; print_r($arGroups); echo "</pre>";
+
+
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
