@@ -55,7 +55,7 @@ class CRockotEventHandlers
 
 		$dbRes = CCrmDeal::GetListEx(
 				[],
-				[], // или другой фильтр, соответствующий вашим требованиям
+				["ID" => $dealId], // или другой фильтр, соответствующий вашим требованиям
 				false,
 				false,
 				// ["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
