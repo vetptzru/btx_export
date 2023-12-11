@@ -51,6 +51,20 @@ class CRockotEventHandlers
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 		//-----
 		CModule::IncludeModule('crm');
+
+		$dbRes = CCrmDeal::GetListEx(
+				[],
+				[], // или другой фильтр, соответствующий вашим требованиям
+				false,
+				false,
+				["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
+		);
+		while ($deal = $dbRes->Fetch()) {
+				// Обработка каждой сделки
+				echo "Сделка: " . $deal['TITLE'] . "<br>";
+		}
+
+
 		$deal = CCrmDeal::GetByID($dealId);
 		echo "<pre>";
 		var_dump($deal);
