@@ -34,7 +34,7 @@ class CRockotEventHandlers
 		// die();
 		//---
 		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
-		CRockotEventHandlers::addLinkToGroupMenu("/company/personal/user/1/disk/path/", "Диск");
+		CRockotEventHandlers::addLinkToGroupMenu("/workgroups/group/$groupId/disk/path/", "Диск");
 		CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 	}
@@ -189,6 +189,9 @@ function getDiskByGroupId($groupId) {
         echo "Ссылка на корневую папку диска: " . $folderUrl;
     }
 	}
+	//
+	//https://dev24.icstar.ru/workgroups/group/46/disk/path/
+	//
 	echo "DISK::: END:::";
 }
 
