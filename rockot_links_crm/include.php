@@ -49,6 +49,11 @@ class CRockotEventHandlers
 		CRockotEventHandlers::addLinkToMenu("", "Проект");
 		CRockotEventHandlers::addLinkToMenu("", "Диск");
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
+		//-----
+		$deal = CCrmDeal::GetByID($dealId);
+		echo "<pre>";
+		var_dump($deal);
+		echo "</pre>";
 	}
 
 	//------
@@ -162,10 +167,14 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
+	// UF_CRM_1679410842
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        // print_r($arGroup);
+				echo "<pre>";
+        print_r($arGroup);
+				echo "</pre>";
+				die();
     }
 	}
 	$deal = getDealForGroup($itemId);
