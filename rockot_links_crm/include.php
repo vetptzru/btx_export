@@ -167,9 +167,9 @@ function getItemById($itemId) {
 	while ($arGroup = $dbGroups->Fetch()) {
 			// Обработка каждой группы
 			if ($arGroup["ID"] != $itemId) {
-				continue;
+				// continue;
 			}
-			echo "ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br>";
+			echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br>";
 	}
 
 
