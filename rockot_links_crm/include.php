@@ -160,35 +160,35 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
-	echo "<pre>";
+	// echo "<pre>";
 
-	CModule::IncludeModule("socialnetwork");
-	$select = array("ID", "NAME", "DESCRIPTION", "CHAT_ID"); // Список полей, которые вы хотите получить
-	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
-	while ($arGroup = $dbGroups->Fetch()) {
-			echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; CHAT_ID: " . $arGroup["CHAT_ID"] . "<br/>";
-	}
+	// CModule::IncludeModule("socialnetwork");
+	// $select = array("ID", "NAME", "DESCRIPTION", "CHAT_ID"); // Список полей, которые вы хотите получить
+	// $dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
+	// while ($arGroup = $dbGroups->Fetch()) {
+			// echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; CHAT_ID: " . $arGroup["CHAT_ID"] . "<br/>";
+	// }
 
 
 
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        print_r($arGroup);
+        // print_r($arGroup);
     }
 	}
 
-	$result = restCommand('im.chat.get', Array(
-		'ENTITY_TYPE' => 'CRM',
-		'ENTITY_ID' => 'GROUP|208',
+// 	$result = restCommand('im.chat.get', Array(
+// 		'ENTITY_TYPE' => 'CRM',
+// 		'ENTITY_ID' => 'GROUP|208',
 		
- ), $_REQUEST["auth"]);
+//  ), $_REQUEST["auth"]);
 
- print_r($result);
+	//  print_r($result);
 
-	echo "</pre>";
+	// echo "</pre>";
 
-	die();
+	// die();
 
 }
 
