@@ -161,9 +161,7 @@ class CRockotEventHandlers
 
 function getItemById($itemId) {
 	if (CModule::IncludeModule('socialnetwork')) {
-    $groupId = 1;
-    $arGroup = CSocNetGroup::GetByID($groupId);
-
+    $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
         print_r($arGroup);
     }
