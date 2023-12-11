@@ -59,7 +59,12 @@ class CRockotEventHandlers
 				false,
 				false,
 				// ["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
-				[]
+				[
+					"UF_CRM_1679410842", // Group link
+					"UF_CRM_1679410808" // Disk link
+					// "UF_CRM_6419D566E9A8A", // Disk link 2
+					// "UF_CRM_6419D56724C56", // Group link 2
+				]
 		);
 		while ($deal = $dbRes->Fetch()) {
 				// Обработка каждой сделки
