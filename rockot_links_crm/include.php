@@ -29,10 +29,12 @@ class CRockotEventHandlers
 			return;
 		}
 		//----
-		getItemById($groupId);
-		getDiskByGroupId($groupId);
+		$deal = getItemById($groupId);
+		// getDiskByGroupId($groupId);
 		//---
-		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
+		if ($deal) {
+			CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
+		}
 		// CRockotEventHandlers::addLinkToGroupMenu("/workgroups/group/$groupId/disk/path/", "Диск");
 		// CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
@@ -160,36 +162,39 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
-	echo "<pre>";
-
-	// CModule::IncludeModule("socialnetwork");
-	// $select = array("ID", "NAME", "DESCRIPTION", "CHAT_ID"); // Список полей, которые вы хотите получить
-	// $dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
-	// while ($arGroup = $dbGroups->Fetch()) {
-			// echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; CHAT_ID: " . $arGroup["CHAT_ID"] . "<br/>";
-	// }
-
-
-
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
         print_r($arGroup);
     }
 	}
+	$deal = getDealForGroup($itemId);
+	return $deal;
+}
 
-// 	$result = restCommand('im.chat.get', Array(
-// 		'ENTITY_TYPE' => 'CRM',
-// 		'ENTITY_ID' => 'GROUP|208',
-		
-//  ), $_REQUEST["auth"]);
-
-	//  print_r($result);
-
-	echo "</pre>";
-
-	die();
-
+function getDealForGroup($groupId) {
+	if (CModule::IncludeModule('tasks') && CModule::IncludeModule('crm')) {
+    $dbRes = CTasks::GetList(
+        [],
+        ["GROUP_ID" => $groupId],
+        ["UF_CRM_TASK"]
+    );
+    while ($task = $dbRes->Fetch()) {
+        // print_r($task);
+				foreach ($task['UF_CRM_TASK'] as $crmElement) {
+					if (strpos($crmElement, 'D_') === 0) {
+							$dealId = substr($crmElement, 2); // Извлекаем ID сделки
+							$deal = CCrmDeal::GetByID($dealId);
+							if ($deal) {
+									// print_r($deal);
+									// echo "Название сделки: " . $deal['TITLE'] . "<br>";
+									return $deal;
+							}
+					}
+			}
+    }
+	}
+	return null;
 }
 
 function getDiskByGroupId($groupId) {
