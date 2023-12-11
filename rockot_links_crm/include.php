@@ -163,7 +163,7 @@ class CRockotEventHandlers
 	public static function getDealLinkTemplate2($link, $title) {
 		return '
 			<div class="main-buttons-item" id="" data-disabled="false" data-class="" data-id="" data-item="" data-top-menu-id="" title="" draggable="true" tabindex="-1" data-link="">
-				<span class="main-buttons-item-link">
+				<a href="'.$link.'" class="main-buttons-item-link">
 					<span class="main-buttons-item-icon"></span>
 					<span class="main-buttons-item-text">
 						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
@@ -177,7 +177,7 @@ class CRockotEventHandlers
 						<span class="main-buttons-item-text-marker"></span>
 					</span>
 					<span class="main-buttons-item-counter"></span>
-				</span>
+				</a>
 			</div>
 		';
 	}
