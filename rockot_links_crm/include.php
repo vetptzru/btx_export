@@ -161,6 +161,8 @@ class CRockotEventHandlers
 function getItemById($itemId) {
 	echo "123132123123123123";
 
+	CModule::IncludeModule("socialnetwork")
+	
 	$filter = array(
 			// Здесь можно указать фильтры, например, "ACTIVE" => "Y" для активных групп
 	);
