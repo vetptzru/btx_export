@@ -106,7 +106,7 @@ class CRockotEventHandlers
 			$result["type"] = "deal";
 		} else if ($page === "group") {
 			$result["type"] = "group";
-			$result["id"] = $urlParts[2];
+			$result["id"] = $urlParts[3];
 		}
 		return $result;
 	}
