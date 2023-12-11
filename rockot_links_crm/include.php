@@ -164,12 +164,8 @@ function getItemById($itemId) {
 
 	CModule::IncludeModule("socialnetwork");
 	$select = array("ID", "NAME", "DESCRIPTION"); // Список полей, которые вы хотите получить
-	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array(), false, false, $select);
+	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
 	while ($arGroup = $dbGroups->Fetch()) {
-			// Обработка каждой группы
-			if ($arGroup["ID"] != $itemId) {
-				// continue;
-			}
 			echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br>";
 	}
 
