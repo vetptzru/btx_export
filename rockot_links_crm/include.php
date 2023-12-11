@@ -31,7 +31,6 @@ class CRockotEventHandlers
 		//----
 		getItemById($groupId);
 		getDiskByGroupId($groupId);
-		// die();
 		//---
 		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
 		CRockotEventHandlers::addLinkToGroupMenu("/workgroups/group/$groupId/disk/path/", "Диск");
@@ -160,28 +159,21 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
-	echo "GROUP::: BEGIN:::";
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        print_r($arGroup);
+        // print_r($arGroup);
     }
 	}
-	echo "GROUP::: END:::";
 }
 
 function getDiskByGroupId($groupId) {
-	echo "DISK::: BEGIN:::";
 	if (!CModule::IncludeModule('disk')) {
 		// echo("none");
     // die('Модуль "Диск" не найден');
 	}
-	echo "123";
 	$storage = \Bitrix\Disk\Driver::getInstance()->getStorageByGroupId($groupId);
-	// echo "asddd: ".$storage;
-	print_r($storage);
 	if ($storage) {
-		echo "3333";
     $folder = $storage->getRootObject();
     if ($folder) {
         $urlManager = \Bitrix\Disk\Driver::getInstance()->getUrlManager();
@@ -191,8 +183,6 @@ function getDiskByGroupId($groupId) {
 	}
 	//
 	//https://dev24.icstar.ru/workgroups/group/46/disk/path/
-	//
-	echo "DISK::: END:::";
 }
 
 function _print_($mes) {
