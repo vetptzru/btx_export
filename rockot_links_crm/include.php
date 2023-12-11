@@ -173,8 +173,8 @@ function getItemById($itemId) {
 function getDiskByGroupId($groupId) {
 	echo "DISK::: BEGIN:::";
 	if (!CModule::IncludeModule('disk')) {
-		echo("none");
-    die('Модуль "Диск" не найден');
+		// echo("none");
+    // die('Модуль "Диск" не найден');
 	}
 	echo "123";
 	$storage = \Bitrix\Disk\Driver::getInstance()->getStorageByGroupId($groupId);
