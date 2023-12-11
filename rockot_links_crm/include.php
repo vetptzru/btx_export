@@ -166,6 +166,9 @@ function getItemById($itemId) {
 	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array(), false, false, $select);
 	while ($arGroup = $dbGroups->Fetch()) {
 			// Обработка каждой группы
+			if ($arGroup["ID"] != $itemId) {
+				continue;
+			}
 			echo "ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br>";
 	}
 
