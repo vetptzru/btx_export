@@ -160,16 +160,18 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
+	echo "GROUP::: BEGIN:::";
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
         print_r($arGroup);
     }
 	}
+	echo "GROUP::: END:::";
 }
 
 function getDiskByGroupId($groupId) {
-	echo "asd";
+	echo "DISK::: BEGIN:::";
 	if (!CModule::IncludeModule('disk')) {
 		echo("none");
     die('Модуль "Диск" не найден');
@@ -187,6 +189,7 @@ function getDiskByGroupId($groupId) {
         echo "Ссылка на корневую папку диска: " . $folderUrl;
     }
 	}
+	echo "DISK::: END:::";
 }
 
 function _print_($mes) {
