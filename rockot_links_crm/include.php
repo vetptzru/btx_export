@@ -33,8 +33,8 @@ class CRockotEventHandlers
 		getDiskByGroupId($groupId);
 		//---
 		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
-		CRockotEventHandlers::addLinkToGroupMenu("/workgroups/group/$groupId/disk/path/", "Диск");
-		CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
+		// CRockotEventHandlers::addLinkToGroupMenu("/workgroups/group/$groupId/disk/path/", "Диск");
+		// CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 	}
 	//------
@@ -160,7 +160,7 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
-	// echo "<pre>";
+	echo "<pre>";
 
 	// CModule::IncludeModule("socialnetwork");
 	// $select = array("ID", "NAME", "DESCRIPTION", "CHAT_ID"); // Список полей, которые вы хотите получить
@@ -174,7 +174,7 @@ function getItemById($itemId) {
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-        // print_r($arGroup);
+        print_r($arGroup);
     }
 	}
 
@@ -186,9 +186,9 @@ function getItemById($itemId) {
 
 	//  print_r($result);
 
-	// echo "</pre>";
+	echo "</pre>";
 
-	// die();
+	die();
 
 }
 
