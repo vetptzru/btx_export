@@ -168,10 +168,10 @@ class CRockotEventHandlers
 					<span class="main-buttons-item-text">
 						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
 						<span class="main-buttons-item-text-title">
-							<span class="main-buttons-item-text-box">
+							<a href="'.$link.'" class="main-buttons-item-text-box">
 								'.$title.'
 								<span class="main-buttons-item-menu-arrow"></span>
-							</span>
+							</a>
 						</span>
 						<span class="main-buttons-item-edit-button" data-slider-ignore-autobinding="true"></span>
 						<span class="main-buttons-item-text-marker"></span>
