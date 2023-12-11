@@ -114,8 +114,9 @@ class CRockotEventHandlers
 						// const container = document.querySelector("#crm_scope_detail_c_deal_");
 						const container = document.querySelector(".main-buttons-inner-container");
 						console.log(container);
+						console.log(customCardHtml);
 						if (container) {
-							container.insertAdjacentHTML('beforeend', customCardHtml);
+							container.insertAdjacentHTML('afterbegin', customCardHtml);
 						}
         });
     </script>
