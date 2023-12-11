@@ -166,7 +166,7 @@ function getItemById($itemId) {
 	$select = array("ID", "NAME", "DESCRIPTION"); // Список полей, которые вы хотите получить
 	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
 	while ($arGroup = $dbGroups->Fetch()) {
-			echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br>";
+			echo "<pre>".$itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br></pre>";
 	}
 
 
