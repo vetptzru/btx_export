@@ -185,8 +185,8 @@ function getDiskByGroupId($groupId) {
     $folder = $storage->getRootObject();
     if ($folder) {
         $urlManager = \Bitrix\Disk\Driver::getInstance()->getUrlManager();
-        $folderUrl = $urlManager->encodeUrn($urlManager->getPathFolderList($folder->getStorageId(), $folder->getId()));
-        echo "Ссылка на корневую папку диска: " . $folderUrl;
+        // $folderUrl = $urlManager->encodeUrn($urlManager->getPathFolderList($folder->getStorageId(), $folder->getId()));
+        // echo "Ссылка на корневую папку диска: " . $folderUrl;
     }
 	}
 	//
