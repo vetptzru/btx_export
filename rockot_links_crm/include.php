@@ -178,7 +178,7 @@ function getDiskByGroupId($groupId) {
 	}
 	echo "123";
 	$storage = \Bitrix\Disk\Driver::getInstance()->getStorageByGroupId($groupId);
-	echo "asddd: ".$storage;
+	// echo "asddd: ".$storage;
 	print_r($storage);
 	if ($storage) {
 		echo "3333";
