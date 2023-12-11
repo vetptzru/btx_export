@@ -162,10 +162,8 @@ function getItemById($itemId) {
 	echo "123132123123123123";
 
 	CModule::IncludeModule("socialnetwork")
-	
-	$filter = array(
-			// Здесь можно указать фильтры, например, "ACTIVE" => "Y" для активных групп
-	);
+
+	$filter = array();
 	$select = array("ID", "NAME", "DESCRIPTION"); // Список полей, которые вы хотите получить
 
 	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), $filter, false, false, $select);
