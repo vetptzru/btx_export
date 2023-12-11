@@ -41,42 +41,53 @@ class CRockotEventHandlers
 	}
 	//------
 	public static function modifyDealPage() {
+		CModule::IncludeModule('crm');
+
 		$dealId = CRockotEventHandlers::getPageId();
 		$isDealIframe = CRockotEventHandlers::isDealIframe();
 		if (!$dealId || !$isDealIframe) {
 			return;
 		}
-		CRockotEventHandlers::addLinkToMenu("", "Проект");
-		CRockotEventHandlers::addLinkToMenu("", "Диск");
+
+		$links = getDealUF($dealId);
+
+		if ($links["group"]) {
+			CRockotEventHandlers::addLinkToMenu($links["group"], "Проект");
+		}
+		if ($links["disk"]) {
+			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск");	
+		}
+		
+		
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 		//-----
-		echo "<pre>";
-		CModule::IncludeModule('crm');
+		// echo "<pre>";
+		// CModule::IncludeModule('crm');
 
-		$dbRes = CCrmDeal::GetListEx(
-				[],
-				["ID" => $dealId], // или другой фильтр, соответствующий вашим требованиям
-				false,
-				false,
-				// ["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
-				[
-					"UF_CRM_1679410842", // Group link
-					"UF_CRM_1679410808" // Disk link
-					// "UF_CRM_6419D566E9A8A", // Disk link 2
-					// "UF_CRM_6419D56724C56", // Group link 2
-				]
-		);
-		while ($deal = $dbRes->Fetch()) {
-				// Обработка каждой сделки
-				// echo "Сделка: " . $deal['TITLE'] . "<br>";
-				var_dump($deal);
-		}
+		// $dbRes = CCrmDeal::GetListEx(
+		// 		[],
+		// 		["ID" => $dealId], // или другой фильтр, соответствующий вашим требованиям
+		// 		false,
+		// 		false,
+		// 		// ["ID", "TITLE", "STAGE_ID", "CATEGORY_ID"] // перечислите нужные поля
+		// 		[
+		// 			"UF_CRM_1679410842", // Group link
+		// 			"UF_CRM_1679410808" // Disk link
+		// 			// "UF_CRM_6419D566E9A8A", // Disk link 2
+		// 			// "UF_CRM_6419D56724C56", // Group link 2
+		// 		]
+		// );
+		// while ($deal = $dbRes->Fetch()) {
+		// 		// Обработка каждой сделки
+		// 		// echo "Сделка: " . $deal['TITLE'] . "<br>";
+		// 		var_dump($deal);
+		// }
 
 
-		$deal = CCrmDeal::GetByID($dealId);
+		// $deal = CCrmDeal::GetByID($dealId);
 		
-		var_dump($deal);
-		echo "</pre>";
+		// var_dump($deal);
+		// echo "</pre>";
 	}
 
 	//------
@@ -249,6 +260,26 @@ function getDiskByGroupId($groupId) {
 	// 5025
 	// https://dev24.icstar.ru/online/?IM_DIALOG=chat5025
 	// https://dev24.icstar.ru/workgroups/group/208/tasks/
+}
+
+function getDealUF($dealId) {
+	$result = ["group" => null, "disk" => null];
+	CModule::IncludeModule('crm');
+	$dbRes = CCrmDeal::GetListEx(
+			[],
+			["ID" => $dealId],
+			false,
+			false,
+			[
+				"UF_CRM_1679410842", // Group link
+				"UF_CRM_1679410808" // Disk link
+			]
+	);
+	while ($deal = $dbRes->Fetch()) {
+			$result["group"] = $deal["UF_CRM_1679410842"];
+			$result["disk"] = $deal["UF_CRM_1679410808"];
+	}
+	return $result;
 }
 
 function _print_($mes) {
