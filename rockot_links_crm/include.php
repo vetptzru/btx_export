@@ -161,7 +161,7 @@ class CRockotEventHandlers
 function getItemById($itemId) {
 	echo "123132123123123123";
 
-	CModule::IncludeModule("socialnetwork")
+	CModule::IncludeModule("socialnetwork");
 	$select = array("ID", "NAME", "DESCRIPTION"); // Список полей, которые вы хотите получить
 	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array(), false, false, $select);
 	while ($arGroup = $dbGroups->Fetch()) {
