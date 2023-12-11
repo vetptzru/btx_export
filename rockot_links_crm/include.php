@@ -52,10 +52,10 @@ class CRockotEventHandlers
 		$links = getDealUF($dealId);
 
 		if ($links["group"]) {
-			CRockotEventHandlers::addLinkToMenu($links["group"], "Проект5216");
+			CRockotEventHandlers::addLinkToMenu($links["group"], "Проект");
 		}
 		if ($links["disk"]) {
-			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск5216");	
+			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск");	
 		}
 		
 		
@@ -113,8 +113,8 @@ class CRockotEventHandlers
 						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate2($link, $title)?>`;
 						// const container = document.querySelector("#crm_scope_detail_c_deal_");
 						const container = document.querySelector(".main-buttons-inner-container");
-						console.log(container);
-						console.log(customCardHtml);
+						// console.log(container);
+						// console.log(customCardHtml);
 						if (container) {
 							container.insertAdjacentHTML('afterbegin', customCardHtml);
 						}
