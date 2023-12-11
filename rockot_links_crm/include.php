@@ -160,13 +160,13 @@ class CRockotEventHandlers
 }
 
 function getItemById($itemId) {
-	echo "123132123123123123";
+	echo "<pre>";
 
 	CModule::IncludeModule("socialnetwork");
 	$select = array("ID", "NAME", "DESCRIPTION"); // Список полей, которые вы хотите получить
 	$dbGroups = CSocNetGroup::GetList(array("NAME" => "ASC"), array("ID" => $itemId), false, false, $select);
 	while ($arGroup = $dbGroups->Fetch()) {
-			echo "<pre>".$itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br></pre>";
+			echo $itemId. ">> ID: " . $arGroup["ID"] . "; Название: " . $arGroup["NAME"] . "; Описание: " . $arGroup["DESCRIPTION"] . "<br/>";
 	}
 
 
@@ -177,6 +177,8 @@ function getItemById($itemId) {
         print_r($arGroup);
     }
 	}
+
+	echo "</pre>";
 
 	die();
 
