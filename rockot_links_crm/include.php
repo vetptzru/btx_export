@@ -52,10 +52,10 @@ class CRockotEventHandlers
 		$links = getDealUF($dealId);
 
 		if ($links["group"]) {
-			CRockotEventHandlers::addLinkToMenu($links["group"], "Проект");
+			CRockotEventHandlers::addLinkToMenu($links["group"], "Проект5216");
 		}
 		if ($links["disk"]) {
-			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск");	
+			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск5216");	
 		}
 		
 		
@@ -110,8 +110,9 @@ class CRockotEventHandlers
 		?>
 		<script>
         document.addEventListener('DOMContentLoaded', function() {
-						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate($link, $title)?>`;
-						const container = document.querySelector("#crm_scope_detail_c_deal_");
+						const customCardHtml = `<?=CRockotEventHandlers::getDealLinkTemplate2($link, $title)?>`;
+						// const container = document.querySelector("#crm_scope_detail_c_deal_");
+						const container = document.querySelector(".main-buttons-inner-container");
 						if (container) {
 							container.insertAdjacentHTML('beforeend', customCardHtml);
 						}
@@ -154,6 +155,29 @@ class CRockotEventHandlers
 
 	public static function getGroupId() {
 
+	}
+
+
+	public static function getDealLinkTemplate2($link, $title) {
+		return '
+			<div class="main-buttons-item" id="" data-disabled="false" data-class="" data-id="" data-item="" data-top-menu-id="" title="" draggable="true" tabindex="-1" data-link="">
+				<span class="main-buttons-item-link">
+					<span class="main-buttons-item-icon"></span>
+					<span class="main-buttons-item-text">
+						<span class="main-buttons-item-drag-button" data-slider-ignore-autobinding="true"></span>
+						<span class="main-buttons-item-text-title">
+							<span class="main-buttons-item-text-box">
+								'.$title.'
+								<span class="main-buttons-item-menu-arrow"></span>
+							</span>
+						</span>
+						<span class="main-buttons-item-edit-button" data-slider-ignore-autobinding="true"></span>
+						<span class="main-buttons-item-text-marker"></span>
+					</span>
+					<span class="main-buttons-item-counter"></span>
+				</span>
+			</div>
+		';
 	}
 
 	public static function getDealLinkTemplate($link, $title) {
