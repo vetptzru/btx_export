@@ -1,6 +1,9 @@
 <?
 use Bitrix\Main\Page\Asset;
+use Bitrix\Main;
+use  Bitrix\Disk;
 
+Main\Loader::IncludeModule('disk');
 
 class CRockotEventHandlers
 {
@@ -25,6 +28,11 @@ class CRockotEventHandlers
 		if (!$groupId) {
 			return;
 		}
+		//----
+		getItemById($groupId);
+		getDiskByGroupId($groupId);
+		// die();
+		//---
 		CRockotEventHandlers::addLinkToGroupMenu("/crm/deal/details/11/", "Сделка");
 		CRockotEventHandlers::addLinkToGroupMenu("/company/personal/user/1/disk/path/", "Диск");
 		CRockotEventHandlers::addLinkToGroupMenu("/online/", "Чат");
@@ -149,6 +157,38 @@ class CRockotEventHandlers
 		';
 	}
 
+}
+
+function getItemById($itemId) {
+	if (CModule::IncludeModule('socialnetwork')) {
+    $groupId = 1;
+    $arGroup = CSocNetGroup::GetByID($groupId);
+
+    if ($arGroup) {
+        print_r($arGroup);
+    }
+	}
+}
+
+function getDiskByGroupId($groupId) {
+	echo "asd";
+	if (!CModule::IncludeModule('disk')) {
+		echo("none");
+    die('Модуль "Диск" не найден');
+	}
+	echo "123";
+	$storage = \Bitrix\Disk\Driver::getInstance()->getStorageByGroupId($groupId);
+	echo "asddd: ".$storage;
+	print_r($storage);
+	if ($storage) {
+		echo "3333";
+    $folder = $storage->getRootObject();
+    if ($folder) {
+        $urlManager = \Bitrix\Disk\Driver::getInstance()->getUrlManager();
+        $folderUrl = $urlManager->encodeUrn($urlManager->getPathFolderList($folder->getStorageId(), $folder->getId()));
+        echo "Ссылка на корневую папку диска: " . $folderUrl;
+    }
+	}
 }
 
 function _print_($mes) {
