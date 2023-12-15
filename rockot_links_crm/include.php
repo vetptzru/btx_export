@@ -231,10 +231,10 @@ function getItemById($itemId) {
 	if (CModule::IncludeModule('socialnetwork')) {
     $arGroup = CSocNetGroup::GetByID($itemId);
     if ($arGroup) {
-				echo "<pre>";
-        print_r($arGroup);
-				echo "</pre>";
-				die();
+				// echo "<pre>";
+        // print_r($arGroup);
+				// echo "</pre>";
+				// die();
     }
 	}
 	$deal = getDealForGroup($itemId);
