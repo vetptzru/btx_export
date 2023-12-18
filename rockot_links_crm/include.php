@@ -45,7 +45,8 @@ class CRockotEventHandlers
 
 		$dealId = CRockotEventHandlers::getPageId();
 		$isDealIframe = CRockotEventHandlers::isDealIframe();
-		if (!$dealId || !$isDealIframe) {
+		$isAjaxRequest = CRockotEventHandlers::isAjaxRequest();
+		if (!$dealId || !$isDealIframe || $isAjaxRequest) {
 			return;
 		}
 
@@ -132,6 +133,13 @@ class CRockotEventHandlers
 		$request = \Bitrix\Main\Context::getCurrent()->getRequest();
 		$qwe = $request->getQueryList()->toArray();
 		return $qwe["IFRAME"] == "Y";
+	}
+
+	public static function isAjaxRequest() {
+		if (isset($_REQUEST["ajax_request"]) && $_REQUEST["ajax_request"] === "Y") {
+			return true;
+		}
+		return false;
 	}
 
 	public static function getPageType() {
