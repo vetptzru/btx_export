@@ -60,7 +60,7 @@ class CRockotEventHandlers
 		
 		$bpList = getBpListByDeal($dealId);
 
-		var_dump($bpList);die();
+		// var_dump($bpList);die();
 
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 
