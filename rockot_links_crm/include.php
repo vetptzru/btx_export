@@ -25,7 +25,8 @@ class CRockotEventHandlers
 	//------
 	public static function modifyGroupPage() {
 		$groupId = CRockotEventHandlers::getPageId();
-		if (!$groupId) {
+		$isAjaxRequest = CRockotEventHandlers::isAjaxRequest();
+		if (!$groupId || $isAjaxRequest) {
 			return;
 		}
 		//----
