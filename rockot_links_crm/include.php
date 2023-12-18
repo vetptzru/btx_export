@@ -58,8 +58,12 @@ class CRockotEventHandlers
 			CRockotEventHandlers::addLinkToMenu($links["disk"], "Диск");	
 		}
 		
-		
+		$bpList = getBpListByDeal($dealId);
+
+		var_dump($bpList);die();
+
 		Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
+
 		//-----
 		// echo "<pre>";
 		// CModule::IncludeModule('crm');
@@ -305,6 +309,35 @@ function getDealUF($dealId) {
 			$result["group"] = $deal["UF_CRM_1679410842"];
 			$result["disk"] = $deal["UF_CRM_1679410808"];
 	}
+	return $result;
+}
+
+function getBpListByDeal($dealId) {
+	$result = [];
+	if (!CModule::IncludeModule("bizproc") || !CModule::IncludeModule("crm")) {
+    return $result;
+	}
+	$documentType = ['crm', 'CCrmDocumentDeal', 'DEAL']; // Тип документа для сделки
+	$documentId = 'DEAL_'.$dealId; // Формат ID документа
+
+	$dbRes = CBPStateService::GetDocumentStates($documentType, $documentId);
+
+	// while ($arRes = $dbRes->GetNext()) {
+	// 		// Здесь у вас есть данные о каждом бизнес-процессе
+	// 		// echo "Название: " . $arRes['TEMPLATE_NAME'] . "<br>";
+	// 		// echo "Статус: " . $arRes['STATE_TITLE'] . "<br>";
+	// 		// ... И другая информация о бизнес-процессе
+	// 		array_push($stack, $arRes);
+	// }
+
+	foreach ($documentStates as $state) {
+		// Здесь у вас есть данные о каждом бизнес-процессе
+		echo "Название: " . $state['TEMPLATE_NAME'] . "<br>";
+		echo "Статус: " . $state['STATE_TITLE'] . "<br>";
+		// ... И другая информация о бизнес-процессе
+		array_push($stack, $state);
+}
+
 	return $result;
 }
 
