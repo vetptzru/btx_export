@@ -36,7 +36,8 @@ class CRockotEventHandlers
 			return;
 		}
 		$deal = getItemById($groupId);
-		RockotDebugger::console("1: ".var_export($deal));
+		// RockotDebugger::console("1: ".var_export($deal));
+		RockotDebugger::dump($deal);die();
 		// if ($deal) {
 			// RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
 		// }
