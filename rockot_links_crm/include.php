@@ -94,13 +94,13 @@ function getItemById($groupId) {
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
-						// echo "ID:<br/>";
-						// RockotDebugger::dump($groupId);
-						// echo "Deal:<br/>";
-						// RockotDebugger::dump($deal);
-						// echo "Info:<br/>";
-						// RockotDebugger::dump($info);
-						// return $deal;
+						echo "ID:<br/>";
+						RockotDebugger::dump($groupId);
+						echo "Deal:<br/>";
+						RockotDebugger::dump($deal);
+						echo "Info:<br/>";
+						RockotDebugger::dump($info);
+						return $deal;
 					}
 				}
     }	
