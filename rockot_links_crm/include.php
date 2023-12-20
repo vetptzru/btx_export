@@ -103,7 +103,9 @@ function getItemById($groupId) {
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
         // Обработка результатов
-        echo "ID: " . $deal['ID'] . "; Название: " . $deal['TITLE'] . "; Пользовательское поле: " . $deal['UF_CRM_1679410842'] . "<br>";
+        // echo "ID: " . $deal['ID'] . "; Название: " . $deal['TITLE'] . "; Пользовательское поле: " . $deal['UF_CRM_1679410842'] . "<br>";
+				// echo "<pre>";var_dump();echo
+				RockotDebugger::dump($deal);
     }	
 	}
 	return null;
@@ -325,7 +327,17 @@ class RockotGroup {
 class RockotDebugger {
 
 	/**
-	 * Print message in log file
+	 * Print message
+	 */
+	static public function dump($value) {
+		echo "<pre>";
+		var_dump($value);
+		echo "</pre>";
+	}
+
+
+	/**
+	 * Log message in file
 	 */
 	static public function print($message) {
 		file_put_contents($_SERVER['DOCUMENT_ROOT']."/deb.log", $mes."\n", FILE_APPEND);
