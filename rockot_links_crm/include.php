@@ -32,12 +32,11 @@ class CRockotEventHandlers
 	public static function modifyGroupPage() {
 		$groupId = RockotRequestHelper::getPageId();
 		$isAjaxRequest = RockotRequestHelper::isAjaxRequest();
-		RockotDebugger::console("1: ".$groupId);
-		RockotDebugger::console("2: ".$isAjaxRequest);
 		if (!$groupId || $isAjaxRequest) {
 			return;
 		}
-		// $deal = getItemById($groupId);
+		$deal = getItemById($groupId);
+		RockotDebugger::console("1: ".var_export($deal));
 		// if ($deal) {
 			// RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
 		// }
