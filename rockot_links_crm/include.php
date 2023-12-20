@@ -105,11 +105,13 @@ function getItemById($groupId) {
         // Обработка результатов
         // echo "ID: " . $deal['ID'] . "; Название: " . $deal['TITLE'] . "; Пользовательское поле: " . $deal['UF_CRM_1679410842'] . "<br>";
 				// echo "<pre>";var_dump();echo
-				RockotDebugger::dump($deal);
+				// RockotDebugger::dump($deal);
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getInfoByURL($deal[UF_GROUP]);
-					RockotDebugger::dump($info);
-					die();
+					if ($info["id"] == $groupId) {
+						RockotDebugger::dump($info);
+						die();
+					}
 				}
     }	
 	}
