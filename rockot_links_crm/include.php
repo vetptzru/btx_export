@@ -35,9 +35,7 @@ class CRockotEventHandlers
 		if (!$groupId || $isAjaxRequest) {
 			return;
 		}
-		$deal = getItemById($groupId);
-		// RockotDebugger::console("1: ".var_export($deal));
-		// RockotDebugger::dump($deal);die();
+		$deal = RockotGroup::findDealByGroupId($groupId);
 		if ($deal) {
 			RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
 		}
@@ -76,46 +74,12 @@ class CRockotEventHandlers
 	}
 }
 
-function getItemById($groupId) {
-	if (CModule::IncludeModule('crm')) {
-    // $filter = ['UF_CRM_1679410842' => $dealId];
-		$filter = ['!UF_CRM_1679410842' => ''];
-
-		// RockotDebugger::dump($filter);
-
-    $select = ['ID', 'TITLE', UF_GROUP]; // Поля, которые вы хотите получить
-
-    $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
-    while ($deal = $dbRes->Fetch()) {
-				
-				// echo "Deal:<br/>";
-				// RockotDebugger::dump($deal);
-				
-				if ($deal[UF_GROUP]) {
-					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
-					if ($info["id"] == $groupId) {
-						// echo "ID:<br/>";
-						// RockotDebugger::dump($groupId);
-						// echo "Deal:<br/>";
-						// RockotDebugger::dump($deal);
-						// echo "Info:<br/>";
-						// RockotDebugger::dump($info);
-						return $deal;
-					}
-				}
-    }	
-	}
-	// die();
-	return null;
-}
-
 ///-----
 
 class RockotRequestHelper {
 
 	/**
 	 * Get type and id for page
-	 * TODO: refactor
 	 */
 	public static function getInfoByURL() {
 		global $APPLICATION;
@@ -289,6 +253,7 @@ class RockotDeal {
     </script>
 		<?
 	}
+
 }
 
 class RockotGroup {
@@ -330,6 +295,27 @@ class RockotGroup {
 				</a>
 			</div>
 		';
+	}
+
+	/**
+	 * Find linked deal by group Id
+	 */
+	public static function findDealByGroupId($groupId) {
+		if (CModule::IncludeModule('crm')) {
+			$filter = ['!UF_CRM_1679410842' => ''];
+			$select = ['ID', 'TITLE', UF_GROUP];
+	
+			$dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
+			while ($deal = $dbRes->Fetch()) {
+					if ($deal[UF_GROUP]) {
+						$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
+						if ($info["id"] == $groupId) {
+							return $deal;
+						}
+					}
+			}	
+		}
+		return null;
 	}
 }
 
