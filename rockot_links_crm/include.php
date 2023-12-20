@@ -75,43 +75,19 @@ class CRockotEventHandlers
 }
 
 function getItemById($groupId) {
-	/*
-	if (CModule::IncludeModule('tasks') && CModule::IncludeModule('crm')) {
-    $dbRes = CTasks::GetList(
-        [],
-        ["GROUP_ID" => $groupId],
-        ["UF_CRM_TASK"]
-    );
-    while ($task = $dbRes->Fetch()) {
-				foreach ($task['UF_CRM_TASK'] as $crmElement) {
-					if (strpos($crmElement, 'D_') === 0) {
-							$dealId = substr($crmElement, 2);
-							$deal = CCrmDeal::GetByID($dealId);
-							if ($deal) {
-									return $deal;
-							}
-					}
-			}
-    }
-	}
-	return null;
-	*/
 	if (CModule::IncludeModule('crm')) {
-    // $filter = ['UF_CRM_1679410842' => $dealId]; // Фильтр по пользовательскому полю
+    // $filter = ['UF_CRM_1679410842' => $dealId];
+		$filter = [];
     $select = ['ID', 'TITLE', UF_GROUP]; // Поля, которые вы хотите получить
 
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
-        // Обработка результатов
-        // echo "ID: " . $deal['ID'] . "; Название: " . $deal['TITLE'] . "; Пользовательское поле: " . $deal['UF_CRM_1679410842'] . "<br>";
-				// echo "<pre>";var_dump();echo
-				// RockotDebugger::dump($deal);
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getInfoByURL($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
 						RockotDebugger::dump($deal);
 						RockotDebugger::dump($info);
-						die();
+						return $deal;
 					}
 				}
     }	
