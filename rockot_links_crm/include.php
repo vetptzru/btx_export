@@ -77,7 +77,6 @@ class CRockotEventHandlers
 }
 
 function getItemById($groupId) {
-	RockotDebugger::console.log($info);
 	if (CModule::IncludeModule('crm')) {
     // $filter = ['UF_CRM_1679410842' => $dealId];
 		$filter = ['!UF_CRM_1679410842' => ''];
