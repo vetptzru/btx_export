@@ -97,8 +97,8 @@ function getItemById($groupId) {
 	return null;
 	*/
 	if (CModule::IncludeModule('crm')) {
-    $filter = ['UF_CRM_1679410842' => $dealId]; // Фильтр по пользовательскому полю
-    $select = ['ID', 'TITLE', 'UF_CRM_1679410842']; // Поля, которые вы хотите получить
+    // $filter = ['UF_CRM_1679410842' => $dealId]; // Фильтр по пользовательскому полю
+    $select = ['ID', 'TITLE', UF_GROUP]; // Поля, которые вы хотите получить
 
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
@@ -106,6 +106,9 @@ function getItemById($groupId) {
         // echo "ID: " . $deal['ID'] . "; Название: " . $deal['TITLE'] . "; Пользовательское поле: " . $deal['UF_CRM_1679410842'] . "<br>";
 				// echo "<pre>";var_dump();echo
 				RockotDebugger::dump($deal);
+				if ($deal[UF_GROUP]) {
+					die();
+				}
     }	
 	}
 	return null;
