@@ -120,17 +120,7 @@ class RockotRequestHelper {
 	public static function getInfoByURL() {
 		global $APPLICATION;
 		$currentUrl = $APPLICATION->GetCurPage();
-		$urlParts = explode('/', $currentUrl);
-		$page = $urlParts[count($urlParts) - 4];
-		$type = $urlParts[count($urlParts) - 3];
-		$dealId = $urlParts[count($urlParts) - 2];
-		$result = ["type" => $type, "id" => $dealId];
-		if ($page === "deal") {
-			$result["type"] = "deal";
-		} else if ($page === "group") {
-			$result["type"] = "group";
-			$result["id"] = $urlParts[3];
-		}
+		$result = RockotRequestHelper::getUrlInfoByString($currentUrl);
 		return $result;
 	}
 
@@ -138,16 +128,18 @@ class RockotRequestHelper {
 	 * Get type and id by URL
 	 */
 	public static function getUrlInfoByString($currentUrl) {
-		$urlParts = explode('/', $currentUrl);
-		$page = $urlParts[count($urlParts) - 4];
-		$type = $urlParts[count($urlParts) - 3];
-		$dealId = $urlParts[count($urlParts) - 2];
-		$result = ["type" => $type, "id" => $dealId];
-		if ($page === "deal") {
-			$result["type"] = "deal";
-		} else if ($page === "group") {
-			$result["type"] = "group";
-			$result["id"] = $urlParts[3];
+		$result = ["entity" => "", "type" => "", "id" => ""];
+
+		$parsed = parse_url($currentUrl);
+		$parts = explode("/", $parsed["path"]);
+
+		$result["entity"] = $parts[1];
+		$result["type"] = $parts[2];
+
+		if ($result["entity"] == "workgroups" && $result["type"] == "group") {
+			$result["id"] = intval($parts[3]);
+		} elseif ($result["entity"] == "crm" && $result["type"] == "deal") {
+			$result["id"] =  intval($parts[4]);
 		}
 		return $result;
 	}
