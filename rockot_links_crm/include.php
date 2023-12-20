@@ -77,7 +77,10 @@ class CRockotEventHandlers
 function getItemById($groupId) {
 	if (CModule::IncludeModule('crm')) {
     // $filter = ['UF_CRM_1679410842' => $dealId];
-		$filter = ['!UF_CRM_1679410842' => ''];
+		$filter = ['!UF_CRM_1679410842' => 'NULL'];
+
+		RockotDebugger::dump($filter);
+
     $select = ['ID', 'TITLE', UF_GROUP]; // Поля, которые вы хотите получить
 
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
