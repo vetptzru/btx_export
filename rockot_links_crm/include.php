@@ -82,6 +82,10 @@ function getItemById($groupId) {
 
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
+				
+			echo "Deal:<br/>";
+				RockotDebugger::dump($deal);
+				
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
@@ -96,6 +100,7 @@ function getItemById($groupId) {
 				}
     }	
 	}
+	die();
 	return null;
 }
 
