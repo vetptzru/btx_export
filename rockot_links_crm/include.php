@@ -302,11 +302,12 @@ class RockotGroup {
 	 */
 	public static function findDealByGroupId($groupId) {
 		if (CModule::IncludeModule('crm')) {
-			$filter = ['!UF_CRM_1679410842' => ''];
+			$filter = ['!'.UF_GROUP => ''];
 			$select = ['ID', 'TITLE', UF_GROUP];
 	
 			$dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
 			while ($deal = $dbRes->Fetch()) {
+					RockotDebugger::dump($deal);
 					if ($deal[UF_GROUP]) {
 						$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 						if ($info["id"] == $groupId) {
