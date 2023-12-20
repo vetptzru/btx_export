@@ -83,7 +83,7 @@ function getItemById($groupId) {
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
 				if ($deal[UF_GROUP]) {
-					$info = RockotRequestHelper::getInfoByURL($deal[UF_GROUP]);
+					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
 						echo "ID:<br/>";
 						RockotDebugger::dump($groupId);
@@ -109,6 +109,24 @@ class RockotRequestHelper {
 	public static function getInfoByURL() {
 		global $APPLICATION;
 		$currentUrl = $APPLICATION->GetCurPage();
+		$urlParts = explode('/', $currentUrl);
+		$page = $urlParts[count($urlParts) - 4];
+		$type = $urlParts[count($urlParts) - 3];
+		$dealId = $urlParts[count($urlParts) - 2];
+		$result = ["type" => $type, "id" => $dealId];
+		if ($page === "deal") {
+			$result["type"] = "deal";
+		} else if ($page === "group") {
+			$result["type"] = "group";
+			$result["id"] = $urlParts[3];
+		}
+		return $result;
+	}
+
+	/**
+	 * Get type and id by URL
+	 */
+	public static function getUrlInfoByString($currentUrl) {
 		$urlParts = explode('/', $currentUrl);
 		$page = $urlParts[count($urlParts) - 4];
 		$type = $urlParts[count($urlParts) - 3];
