@@ -346,10 +346,3 @@ class RockotDebugger {
 		<?
 	}
 }
-
-//////////
-// https://dev24.icstar.ru/workgroups/group/46/disk/path/
-// https://dev24.icstar.ru/workgroups/group/208/
-// 5025
-// https://dev24.icstar.ru/online/?IM_DIALOG=chat5025
-// https://dev24.icstar.ru/workgroups/group/208/tasks/
