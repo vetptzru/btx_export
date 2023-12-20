@@ -85,8 +85,6 @@ function getItemById($groupId) {
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getInfoByURL($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
-						RockotDebugger::dump($deal);
-						RockotDebugger::dump($info);
 						return $deal;
 					}
 				}
