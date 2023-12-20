@@ -107,6 +107,8 @@ function getItemById($groupId) {
 				// echo "<pre>";var_dump();echo
 				RockotDebugger::dump($deal);
 				if ($deal[UF_GROUP]) {
+					$info = RockotRequestHelper::getInfoByURL($deal[UF_GROUP]);
+					RockotDebugger::dump($info);
 					die();
 				}
     }	
