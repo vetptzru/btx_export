@@ -157,13 +157,13 @@ class RockotDeal {
 				false,
 				false,
 				[
-					"UF_CRM_1679410842", // Group link
-					"UF_CRM_1679410808" // Disk link
+					UF_GROUP, // Group link
+					UF_DISK // Disk link
 				]
 		);
 		while ($deal = $dbRes->Fetch()) {
-				$result["group"] = $deal["UF_CRM_1679410842"];
-				$result["disk"] = $deal["UF_CRM_1679410808"];
+				$result["group"] = $deal[UF_GROUP];
+				$result["disk"] = $deal[UF_DISK];
 		}
 		return $result;
 	}
@@ -302,12 +302,10 @@ class RockotGroup {
 	 */
 	public static function findDealByGroupId($groupId) {
 		if (CModule::IncludeModule('crm')) {
-			$filter = ['!'.UF_GROUP => ''];
+			$filter = ['!'.UF_GROUP => '']; // TODO: make filter with using %substring%
 			$select = ['ID', 'TITLE', UF_GROUP];
-	
 			$dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
 			while ($deal = $dbRes->Fetch()) {
-					RockotDebugger::dump($deal);
 					if ($deal[UF_GROUP]) {
 						$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 						if ($info["id"] == $groupId) {
