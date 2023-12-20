@@ -32,13 +32,15 @@ class CRockotEventHandlers
 	public static function modifyGroupPage() {
 		$groupId = RockotRequestHelper::getPageId();
 		$isAjaxRequest = RockotRequestHelper::isAjaxRequest();
+		RockotDebugger::console("1: ".$groupId);
+		RockotDebugger::console("2: ".$isAjaxRequest);
 		if (!$groupId || $isAjaxRequest) {
 			return;
 		}
-		$deal = getItemById($groupId);
-		if ($deal) {
-			RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
-		}
+		// $deal = getItemById($groupId);
+		// if ($deal) {
+			// RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
+		// }
 
 		// Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 
@@ -114,6 +116,7 @@ class RockotRequestHelper {
 
 	/**
 	 * Get type and id for page
+	 * TODO: refactor
 	 */
 	public static function getInfoByURL() {
 		global $APPLICATION;
