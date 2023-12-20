@@ -75,6 +75,7 @@ class CRockotEventHandlers
 }
 
 function getItemById($groupId) {
+	RockotDebugger::console.log($info);
 	if (CModule::IncludeModule('crm')) {
     // $filter = ['UF_CRM_1679410842' => $dealId];
 		$filter = ['!UF_CRM_1679410842' => ''];
@@ -92,18 +93,18 @@ function getItemById($groupId) {
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
-						echo "ID:<br/>";
-						RockotDebugger::dump($groupId);
-						echo "Deal:<br/>";
-						RockotDebugger::dump($deal);
-						echo "Info:<br/>";
-						RockotDebugger::dump($info);
-						return $deal;
+						// echo "ID:<br/>";
+						// RockotDebugger::dump($groupId);
+						// echo "Deal:<br/>";
+						// RockotDebugger::dump($deal);
+						// echo "Info:<br/>";
+						// RockotDebugger::dump($info);
+						// return $deal;
 					}
 				}
     }	
 	}
-	die();
+	// die();
 	return null;
 }
 
@@ -355,6 +356,15 @@ class RockotDebugger {
 	 */
 	static public function print($message) {
 		file_put_contents($_SERVER['DOCUMENT_ROOT']."/deb.log", $mes."\n", FILE_APPEND);
+	}
+
+	/**
+	 * Write log to browser console
+	 */
+	static public function console($message) {
+		?>
+			<script>console.log(`<?=$message?>`)</script>
+		<?
 	}
 }
 
