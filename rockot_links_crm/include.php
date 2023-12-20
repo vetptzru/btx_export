@@ -37,10 +37,10 @@ class CRockotEventHandlers
 		}
 		$deal = getItemById($groupId);
 		// RockotDebugger::console("1: ".var_export($deal));
-		RockotDebugger::dump($deal);die();
-		// if ($deal) {
-			// RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
-		// }
+		// RockotDebugger::dump($deal);die();
+		if ($deal) {
+			RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
+		}
 
 		// Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 
