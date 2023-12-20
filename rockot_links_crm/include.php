@@ -79,26 +79,26 @@ function getItemById($groupId) {
     // $filter = ['UF_CRM_1679410842' => $dealId];
 		$filter = ['!UF_CRM_1679410842' => ''];
 
-		RockotDebugger::dump($filter);
+		// RockotDebugger::dump($filter);
 
     $select = ['ID', 'TITLE', UF_GROUP]; // Поля, которые вы хотите получить
 
     $dbRes = CCrmDeal::GetListEx([], $filter, false, false, $select);
     while ($deal = $dbRes->Fetch()) {
 				
-				echo "Deal:<br/>";
-				RockotDebugger::dump($deal);
+				// echo "Deal:<br/>";
+				// RockotDebugger::dump($deal);
 				
 				if ($deal[UF_GROUP]) {
 					$info = RockotRequestHelper::getUrlInfoByString($deal[UF_GROUP]);
 					if ($info["id"] == $groupId) {
-						echo "ID:<br/>";
-						RockotDebugger::dump($groupId);
-						echo "Deal:<br/>";
-						RockotDebugger::dump($deal);
-						echo "Info:<br/>";
-						RockotDebugger::dump($info);
-						// return $deal;
+						// echo "ID:<br/>";
+						// RockotDebugger::dump($groupId);
+						// echo "Deal:<br/>";
+						// RockotDebugger::dump($deal);
+						// echo "Info:<br/>";
+						// RockotDebugger::dump($info);
+						return $deal;
 					}
 				}
     }	
