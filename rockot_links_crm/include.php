@@ -51,7 +51,7 @@ class CRockotEventHandlers
 
 		RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
 
-		$links = RockotDeal::getGroupAndDiskLinksByDeal($$deal["ID"]);
+		$links = RockotDeal::getGroupAndDiskLinksByDeal($deal["ID"]);
 		if ($links["disk"]) {
 			RockotGroup::addLinkToGroupMenu($links["disk"], "Папка сделки");
 		}
