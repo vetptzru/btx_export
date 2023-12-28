@@ -36,9 +36,26 @@ class CRockotEventHandlers
 			return;
 		}
 		$deal = RockotGroup::findDealByGroupId($groupId);
-		if ($deal) {
-			RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
+		
+
+		if ($links["group"]) {
+			RockotDeal::addLinkToMenu($links["group"], "Проект");
 		}
+		if ($links["disk"]) {
+			RockotDeal::addLinkToMenu($links["disk"], "Диск");	
+		}
+
+		if (!$deal) {
+			return;
+		}
+
+		RockotGroup::addLinkToGroupMenu("/crm/deal/details/".$deal["ID"]."/", "Сделка");
+
+		$links = RockotDeal::getGroupAndDiskLinksByDeal($$deal["ID"]);
+		if ($links["disk"]) {
+			RockotGroup::addLinkToGroupMenu($links["disk"], "Папка сделки");
+		}
+		
 
 		// Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 
