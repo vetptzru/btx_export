@@ -125,7 +125,7 @@ class CBpListEventHandlers
 
 		$iterator = WorkflowInstanceTable::getList([
 			'order' => [],
-			'select' => ["*"], //$selectFields,
+			'select' => $select,
 			'filter' => ["WORKFLOW_TEMPLATE_ID" => 16], // $filter,
 			'limit' => 10,
 			'offset' => 0,
@@ -136,17 +136,17 @@ class CBpListEventHandlers
 
 		while ($row = $iterator->fetch()) {
 
-			// $templateName = self::getBpTemplateName($row, $templateList);
-			// $row["_TEMPLATE_NAME"] = $templateName;
+			$templateName = self::getBpTemplateName($row, $templateList);
+			$row["_TEMPLATE_NAME"] = $templateName;
 
-			// $documentName = self::getBpDocumentName($row);
-			// $row["_DOCUMENT_NAME"] = $documentName;
+			$documentName = self::getBpDocumentName($row);
+			$row["_DOCUMENT_NAME"] = $documentName;
 
-			// $startedBy = self::getStartedBy($row);
-			// $row["_STARTED_BY"] = $startedBy;
+			$startedBy = self::getStartedBy($row);
+			$row["_STARTED_BY"] = $startedBy;
 
-			// $documentUrl = self::getBpDocumentUrl($row);
-			// $row["DOCUMENT_URL"] = $documentUrl;
+			$documentUrl = self::getBpDocumentUrl($row);
+			$row["DOCUMENT_URL"] = $documentUrl;
 
 			self::dump($row);
 		}
