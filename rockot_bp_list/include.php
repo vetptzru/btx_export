@@ -4,6 +4,7 @@ use Bitrix\Disk\Folder;
 use Bitrix\Disk\Driver;
 use Bitrix\Bizproc\Activity\PropertiesDialog;
 use Bitrix\Bizproc\Workflow\Entity\WorkflowInstanceTable;
+use Bizproc\Workflow\Entity\WorkflowStateTable;
 
 Loader::includeModule('disk');
 Loader::includeModule('crm');
@@ -11,18 +12,39 @@ Loader::includeModule('bizproc');
 
 class CBpListEventHandlers
 {
-	public static function OnBeforeProlog(){}
+	public static function OnBeforeProlog()
+	{
+	}
 
-	public static function OnProlog(){}
+	public static function OnProlog()
+	{
+	}
 
 	public static function OnEpilog()
 	{
 
-		$urlInfo = self::getInfoByURL();
-		self::print(var_export($urlInfo, true));
-		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-			// self::modifyBpListPage();
+		// $urlInfo = self::getInfoByURL();P
+		// if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
+		// 	self::modifyBpListPage();
+		// }
+
+		self::print("001");
+		if (!self::isNeededPage()) {
+			return;
 		}
+
+
+		self::print("002");
+		$document = self::getDocumentObject();
+		if (!$document) {
+			return;
+		}
+
+		self::print("003");
+		self::getBpListByDeal($document);
+
+		self::print("004");
+
 	}
 
 	private static function modifyBpListPage()
@@ -62,16 +84,16 @@ class CBpListEventHandlers
 				<tbody>
 		';
 		foreach ($row as $item) {
-			$result.= '
+			$result .= '
 				<tr class="main-grid-row main-grid-row-body">
 					<td class="main-grid-cell main-grid-cell-center">Процесс</td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content"><a href="'.$item["_DOCUMENT_URL"].'">'.$item["_DOCUMENT_NAME"].'</a></span></td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_STARTED_BY"].'</span></td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_TEMPLATE_NAME"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content"><a href="' . $item["_DOCUMENT_URL"] . '">' . $item["_DOCUMENT_NAME"] . '</a></span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">' . $item["_STARTED_BY"] . '</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">' . $item["_TEMPLATE_NAME"] . '</span></td>
 				</tr>
 			';
 		}
-		$result.= "</tbody></table>";
+		$result .= "</tbody></table>";
 		return $result;
 	}
 
@@ -113,6 +135,50 @@ class CBpListEventHandlers
 		file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/deb.log", $message . "\n", FILE_APPEND);
 	}
 
+
+	private static function isNeededPage()
+	{
+		global $APPLICATION;
+		$currentUrl = $APPLICATION->GetCurPage();
+		if (strripos($currentUrl, "bitrix/components/bitrix/bizproc.document/lazyload.ajax.php")) {
+			return true;
+		}
+		return false;
+	}
+
+	private static function getDocumentId()
+	{
+		$payload = self::getPayload();
+		return $payload["DOCUMENT_ID"];
+	}
+
+	private static function getDocumentObject()
+	{
+		$payload = self::getPayload();
+		if (!$payload["MODULE_ID"] || !$payload["ENTITY"] || !$payload["DOCUMENT_TYPE"] || !$payload["DOCUMENT_ID"]) {
+			return false;
+		}
+		$documentType = [$payload["MODULE_ID"], $payload["ENTITY"], $payload["DOCUMENT_TYPE"]];
+		$documentId = [$payload["MODULE_ID"], $payload["ENTITY"], $payload["DOCUMENT_ID"]];
+
+		return ["type" => $documentType, "id" => $documentId];
+	}
+
+	private static function getPayload()
+	{
+		$componentData = isset($_REQUEST['PARAMS']) && is_array($_REQUEST['PARAMS']) ? $_REQUEST['PARAMS'] : [];
+		$params = isset($componentData['params']) && is_array($componentData['params']) ? $componentData['params'] : [];
+
+		$componentParams = [];
+		$componentParams['MODULE_ID'] = $params['MODULE_ID'] ?? null;
+		$componentParams['ENTITY'] = $params['ENTITY'] ?? null;
+		$componentParams['DOCUMENT_TYPE'] = $params['DOCUMENT_TYPE'] ?? null;
+		$componentParams['DOCUMENT_ID'] = $params['DOCUMENT_ID'] ?? null;
+
+		return $componentParams;
+	}
+
+
 	/**
 	 * Get type and id for page
 	 */
@@ -148,7 +214,7 @@ class CBpListEventHandlers
 	//----------
 
 
-	static function getFiltredBpList()
+	static function getFiltredBpList($document)
 	{
 		$result = [];
 		$templateList = self::getBpTemplateList();
@@ -257,6 +323,44 @@ class CBpListEventHandlers
 			) . " [" . $row['WS_STARTED_BY'] . "]";
 		}
 		return "";
+	}
+
+
+	static function getBpListByDeal($documentId)
+	{
+		$workflows = [];
+		$size = 20;
+
+		$filter = [
+			'=MODULE_ID' => $documentId[0],
+			'=ENTITY' => $documentId[1],
+			'=DOCUMENT_ID' => $documentId[2],
+			'=INSTANCE.ID' => null,
+		];
+
+		// if ($ids) {
+		// 	$filter = [
+		// 		'@ID' => $ids,
+		// 		'=INSTANCE.ID' => null,
+		// 	];
+		// }
+
+		$rows = Bizproc\Workflow\Entity\WorkflowStateTable::getList([
+			'select' => [
+				'ID',
+				'TEMPLATE_NAME' => 'TEMPLATE.NAME',
+				'STATE_TITLE',
+				'STATE_NAME' => 'STATE',
+				'MODIFIED',
+			],
+			'filter' => $filter,
+			'limit' => 100,
+			'offset' => 0,
+			'order' => ['MODIFIED' => 'DESC'],
+		])->fetchAll();
+
+
+		self::print(var_export($rows, true));
 	}
 
 
