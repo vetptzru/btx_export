@@ -19,8 +19,8 @@ class CBpListEventHandlers
 	{
 
 		$urlInfo = self::getInfoByURL();
+		self::print(var_export($urlInfo, true));
 		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-			self::print(var_export($urlInfo, true));
 			// self::modifyBpListPage();
 		}
 	}
