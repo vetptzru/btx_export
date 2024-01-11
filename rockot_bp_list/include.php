@@ -42,7 +42,7 @@ class CBpListEventHandlers
 		}
 
 		self::print("003");
-		self::getBpListByDeal($document);
+		self::getBpListByDeal($document["id"]);
 
 		self::print("004");
 
