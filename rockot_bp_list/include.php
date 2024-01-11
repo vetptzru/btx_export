@@ -29,7 +29,6 @@ class CBpListEventHandlers
 		// 	self::modifyBpListPage();
 		// }
 
-		self::print("001");
 		if (!self::isNeededPage()) {
 			return;
 		}
