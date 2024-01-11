@@ -74,17 +74,18 @@ class CBpListEventHandlers
 		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 
 		$result = '
-			<h3>Отфильтрованные бизнес процессы</h3>
-			<table class="main-grid-table">
-				<thead class="main-grid-header">
-				<tr class="main-grid-row-head">
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Модуль</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Документ</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Запустил</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Бизнесс процесс</span></th>
-				</tr>
-				</thead>
-				<tbody>
+			<div stule="padding:15px;">
+				<h3>Отфильтрованные бизнес процессы</h3>
+				<table class="main-grid-table">
+					<thead class="main-grid-header">
+					<tr class="main-grid-row-head">
+						<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Модуль</span></th>
+						<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Документ</span></th>
+						<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Запустил</span></th>
+						<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Бизнесс процесс</span></th>
+					</tr>
+					</thead>
+					<tbody>
 		';
 		foreach ($row as $item) {
 			$result .= '
@@ -96,7 +97,7 @@ class CBpListEventHandlers
 				</tr>
 			';
 		}
-		$result .= "</tbody></table>";
+		$result .= "</tbody></table></div>";
 		return $result;
 	}
 
