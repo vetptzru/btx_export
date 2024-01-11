@@ -37,14 +37,6 @@ class CRockotEventHandlers
 		}
 		$deal = RockotGroup::findDealByGroupId($groupId);
 		
-
-		if ($links["group"]) {
-			RockotDeal::addLinkToMenu($links["group"], "Проект");
-		}
-		if ($links["disk"]) {
-			RockotDeal::addLinkToMenu($links["disk"], "Диск");	
-		}
-
 		if (!$deal) {
 			return;
 		}
@@ -84,8 +76,6 @@ class CRockotEventHandlers
 			RockotDeal::addLinkToMenu($links["disk"], "Диск");	
 		}
 		
-		$bpList = RockotDeal::getBpListByDealId($dealId);
-
 		// Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
 
 	}
@@ -181,25 +171,6 @@ class RockotDeal {
 		while ($deal = $dbRes->Fetch()) {
 				$result["group"] = $deal[UF_GROUP];
 				$result["disk"] = $deal[UF_DISK];
-		}
-		return $result;
-	}
-
-	/**
-	 * Get list of BP for deal
-	 */
-	static public function getBpListByDealId() {
-		$result = [];
-		if (!CModule::IncludeModule("bizproc") || !CModule::IncludeModule("crm")) {
-			return $result;
-		}
-		$documentType = ['crm', 'CCrmDocumentDeal', 'DEAL'];
-		$documentId = 'DEAL_'.$dealId;
-
-		$dbRes = CBPStateService::GetDocumentStates($documentType, $documentId);
-
-		foreach ($documentStates as $state) {
-			array_push($stack, $state);
 		}
 		return $result;
 	}
@@ -351,7 +322,7 @@ class RockotDebugger {
 	 * Log message in file
 	 */
 	static public function print($message) {
-		file_put_contents($_SERVER['DOCUMENT_ROOT']."/deb.log", $mes."\n", FILE_APPEND);
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/deb.log", $message."\n", FILE_APPEND);
 	}
 
 	/**
