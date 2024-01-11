@@ -26,6 +26,7 @@ class CBpListEventHandlers
 	private static function modifyBpListPage()
 	{
 		$list = self::getFiltredBpList();
+		self::addHtmlSection("<pre>!!!!!!!!!!!!! I'm here !!!!!!!!!!!!</pre>");
 		self::addHtmlSection("<pre>".var_export($list, true)."</pre>");
 	}
 
