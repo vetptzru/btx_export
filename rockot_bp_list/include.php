@@ -215,7 +215,7 @@ class CBpListEventHandlers
 	//----------
 
 
-	static function getFiltredBpList($document)
+	static function getFiltredBpList()
 	{
 		$result = [];
 		$templateList = self::getBpTemplateList();
@@ -342,8 +342,10 @@ class CBpListEventHandlers
 			'=ENTITY' => "CCrmDocumentDeal",
 			'=DOCUMENT_ID' => $documentId[2],
 			'=INSTANCE.ID' => null,
-			'WORKFLOW_TEMPLATE_ID' => [206, 20, 18, 110]
+			// 'WORKFLOW_TEMPLATE_ID' => [206, 20, 18, 110]
 		];
+
+		self::print("doc: ".var_export($filter, true));
 
 		// if ($ids) {
 		// 	$filter = [
