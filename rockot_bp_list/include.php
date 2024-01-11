@@ -21,6 +21,12 @@ class CBpListEventHandlers
 
 	public static function OnProlog()
 	{
+		echo "<pre>wm0102wmPR</pre>";
+	}
+
+	public static function OnEpilog()
+	{
+		echo "<pre>wm0102wmEP</pre>";
 	}
 
 	private static function modifyBpListPage()
