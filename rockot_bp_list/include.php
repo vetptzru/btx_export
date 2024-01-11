@@ -25,9 +25,8 @@ class CBpListEventHandlers
 
 	private static function modifyBpListPage()
 	{
-		self::addHtmlSection("111111");
-		self::print("GOGOGO!");
-		self::getFiltredBpList();
+		$list = self::getFiltredBpList();
+		self::addHtmlSection("<pre>".var_export($list, true)."</pre>");
 	}
 
 	// ------ HELPERS --------
@@ -42,7 +41,8 @@ class CBpListEventHandlers
 				const customCardHtml = `<?= $html ?>`;
 				const container = document.querySelector("#workarea-content");
 				if (container) {
-					container.insertAdjacentHTML('beforeend', customCardHtml);
+					// container.insertAdjacentHTML('beforeend', customCardHtml);
+					container.insertAdjacentHTML('afterbegin', customCardHtml);
 				}
 			});
 		</script>
@@ -105,7 +105,7 @@ class CBpListEventHandlers
 
 	static function getFiltredBpList()
 	{
-
+		$result = [];
 		$templateList = self::getBpTemplateList();
 		$select = [
 			"ID",
@@ -151,7 +151,9 @@ class CBpListEventHandlers
 			// $row["DOCUMENT_URL"] = $documentUrl;
 
 			self::dump($row);
+			$result[] = $row;
 		}
+		return $result;
 	}
 
 
