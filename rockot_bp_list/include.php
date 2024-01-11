@@ -74,7 +74,7 @@ class CBpListEventHandlers
 		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 
 		$result = '
-			<div stule="padding:15px;">
+			<div style="padding:10px;">
 				<h3>Отфильтрованные бизнес процессы</h3>
 				<table class="main-grid-table">
 					<thead class="main-grid-header">
