@@ -11,14 +11,9 @@ Loader::includeModule('bizproc');
 
 class CBpListEventHandlers
 {
-	public static function OnBeforeProlog()
-	{
-	}
+	public static function OnBeforeProlog(){}
 
-	public static function OnProlog()
-	{
-
-	}
+	public static function OnProlog(){}
 
 	public static function OnEpilog()
 	{
@@ -34,7 +29,6 @@ class CBpListEventHandlers
 		$list = self::getFiltredBpList();
 		$html = self::getHtmlByArray($list);
 		self::addHtmlSection($html);
-		self::addHtmlSection("YYY");
 	}
 
 	// ------ HELPERS --------
