@@ -24,11 +24,13 @@ class CBpListEventHandlers
 	public static function OnEpilog()
 	{
 
-		// $urlInfo = self::getInfoByURL();P
-		// if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-		// 	self::modifyBpListPage();
-		// }
+		$urlInfo = self::getInfoByURL();
+		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
+			self::modifyBpListPage();
+		}
 
+
+		/*
 		if (!self::isNeededPage()) {
 			return;
 		}
@@ -44,6 +46,7 @@ class CBpListEventHandlers
 		self::getBpListByDeal($document["id"]);
 
 		self::print("004");
+		*/
 
 	}
 
@@ -71,7 +74,7 @@ class CBpListEventHandlers
 		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 
 		$result = '
-			<h3></h3>
+			<h3>Отфильтрованные бизнес процессы</h3>
 			<table class="main-grid-table">
 				<thead class="main-grid-header">
 				<tr class="main-grid-row-head">
@@ -108,8 +111,8 @@ class CBpListEventHandlers
 				const container = document.querySelector(".workarea-content-paddings");
 
 				if (container) {
-					// container.insertAdjacentHTML('beforeend', customCardHtml);
-					container.insertAdjacentHTML('afterbegin', customCardHtml);
+					container.insertAdjacentHTML('beforeend', customCardHtml);
+					// container.insertAdjacentHTML('afterbegin', customCardHtml);
 				}
 			});
 		</script>
