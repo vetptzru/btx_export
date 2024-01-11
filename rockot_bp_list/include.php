@@ -342,7 +342,7 @@ class CBpListEventHandlers
 			'=ENTITY' => "CCrmDocumentDeal",
 			'=DOCUMENT_ID' => $documentId[2],
 			'=INSTANCE.ID' => null,
-			// 'WORKFLOW_TEMPLATE_ID' => [206, 20, 18, 110]
+			'WORKFLOW_TEMPLATE_ID' => 206
 		];
 
 		self::print("doc: ".var_export($filter, true));
