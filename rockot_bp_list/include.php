@@ -20,7 +20,8 @@ class CBpListEventHandlers
 
 		$urlInfo = self::getInfoByURL();
 		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-			self::modifyBpListPage();
+			self::print(var_export($urlInfo, true));
+			// self::modifyBpListPage();
 		}
 	}
 
@@ -48,6 +49,7 @@ class CBpListEventHandlers
 		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 
 		$result = '
+			<h3></h3>
 			<table class="main-grid-table">
 				<thead class="main-grid-header">
 				<tr class="main-grid-row-head">
@@ -170,7 +172,7 @@ class CBpListEventHandlers
 			'order' => [],
 			'select' => $select,
 			'filter' => ["WORKFLOW_TEMPLATE_ID" => [206, 20, 18, 110]], // $filter,
-			'limit' => 10,
+			'limit' => 500,
 			'offset' => 0
 		]);
 
