@@ -258,7 +258,7 @@ class CBpListEventHandlers
 			$row["_STARTED_BY"] = $startedBy;
 
 			$documentUrl = self::getBpDocumentUrl($row);
-			$row["DOCUMENT_URL"] = $documentUrl;
+			$row["_DOCUMENT_URL"] = $documentUrl;
 
 			// self::dump($row);
 			$result[] = $row;
