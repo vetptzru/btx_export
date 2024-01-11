@@ -361,9 +361,10 @@ class CBpListEventHandlers
 				'STATE_TITLE',
 				'STATE_NAME' => 'STATE',
 				'MODIFIED',
+				'WORKFLOW_TEMPLATE_ID'
 			],
 			'filter' => $filter,
-			'limit' => 100,
+			'limit' => 1000,
 			'offset' => 0,
 			'order' => ['MODIFIED' => 'DESC'],
 		])->fetchAll();
