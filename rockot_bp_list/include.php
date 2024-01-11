@@ -13,20 +13,15 @@ class CBpListEventHandlers
 {
 	public static function OnBeforeProlog()
 	{
-		// $urlInfo = self::getInfoByURL();
-		// if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-		// 	self::modifyBpListPage();
-		// }
 	}
 
 	public static function OnProlog()
 	{
-		// echo "<pre>wm0102wmPR</pre>";
+
 	}
 
 	public static function OnEpilog()
 	{
-		// echo "<pre>wm0102wmEP</pre>";
 
 		$urlInfo = self::getInfoByURL();
 		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
@@ -37,15 +32,9 @@ class CBpListEventHandlers
 	private static function modifyBpListPage()
 	{
 		$list = self::getFiltredBpList();
-		// self::addHtmlSection("<pre>!!!!!!!!!!!!! I'm here !!!!!!!!!!!!</pre>");
-		// $log = "<pre>" . var_export($list, true) . "</pre>";
-		// self::addHtmlSection("<h4>???</h4>");
-		// self::print($log);
 		$html = self::getHtmlByArray($list);
-		// self::print($html);
 		self::addHtmlSection($html);
 		self::addHtmlSection("YYY");
-		// self::print("Done");
 	}
 
 	// ------ HELPERS --------
@@ -71,8 +60,8 @@ class CBpListEventHandlers
 		';
 		foreach ($row as $item) {
 			$result.= '
-				<tr class="main-grid-row main-grid-row-body main-grid-cell main-grid-cell-left">
-					<td class="main-grid-cell main-grid-cell-left">Процесс</td>
+				<tr class="main-grid-row main-grid-row-body">
+					<td class="main-grid-cell main-grid-cell-center">Процесс</td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_DOCUMENT_NAME"].'</span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
