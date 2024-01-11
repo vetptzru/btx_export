@@ -37,15 +37,22 @@ class CBpListEventHandlers
 
 	private static function getHtmlByArray($row)
 	{
+
+		// <th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата изменения</span></th>
+		// <th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Завис</span></th>
+		// <th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата начала</span></th>
+
+
+		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+		// <td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+
 		$result = '
 			<table class="main-grid-table">
 				<thead class="main-grid-header">
 				<tr class="main-grid-row-head">
 					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Модуль</span></th>
 					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Документ</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата изменения</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Завис</span></th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата начала</span></th>
 					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Запустил</span></th>
 					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Бизнесс процесс</span></th>
 				</tr>
@@ -57,9 +64,6 @@ class CBpListEventHandlers
 				<tr class="main-grid-row main-grid-row-body">
 					<td class="main-grid-cell main-grid-cell-center">Процесс</td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_DOCUMENT_NAME"].'</span></td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_STARTED_BY"].'</span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_TEMPLATE_NAME"].'</span></td>
 				</tr>
