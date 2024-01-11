@@ -13,10 +13,10 @@ class CBpListEventHandlers
 {
 	public static function OnBeforeProlog()
 	{
-		$urlInfo = self::getInfoByURL();
-		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-			self::modifyBpListPage();
-		}
+		// $urlInfo = self::getInfoByURL();
+		// if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
+		// 	self::modifyBpListPage();
+		// }
 	}
 
 	public static function OnProlog()
@@ -27,6 +27,11 @@ class CBpListEventHandlers
 	public static function OnEpilog()
 	{
 		echo "<pre>wm0102wmEP</pre>";
+		
+		$urlInfo = self::getInfoByURL();
+		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
+			self::modifyBpListPage();
+		}
 	}
 
 	private static function modifyBpListPage()
@@ -38,7 +43,7 @@ class CBpListEventHandlers
 		self::print($log);
 		$html = self::getHtmlByArray($list);
 		self::print($html);
-		// self::addHtmlSection($html);
+		self::addHtmlSection($html);
 		self::addHtmlSection("YYY");
 		self::print("Done");
 	}
