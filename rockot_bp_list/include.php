@@ -138,17 +138,17 @@ class CBpListEventHandlers
 
 		while ($row = $iterator->fetch()) {
 
-			// $templateName = self::getBpTemplateName($row, $templateList);
-			// $row["_TEMPLATE_NAME"] = $templateName;
+			$templateName = self::getBpTemplateName($row, $templateList);
+			$row["_TEMPLATE_NAME"] = $templateName;
 
-			// $documentName = self::getBpDocumentName($row);
-			// $row["_DOCUMENT_NAME"] = $documentName;
+			$documentName = self::getBpDocumentName($row);
+			$row["_DOCUMENT_NAME"] = $documentName;
 
-			// $startedBy = self::getStartedBy($row);
-			// $row["_STARTED_BY"] = $startedBy;
+			$startedBy = self::getStartedBy($row);
+			$row["_STARTED_BY"] = $startedBy;
 
-			// $documentUrl = self::getBpDocumentUrl($row);
-			// $row["DOCUMENT_URL"] = $documentUrl;
+			$documentUrl = self::getBpDocumentUrl($row);
+			$row["DOCUMENT_URL"] = $documentUrl;
 
 			self::dump($row);
 			$result[] = $row;
@@ -160,16 +160,16 @@ class CBpListEventHandlers
 	static function getBpDocumentName($row)
 	{
 		return CBPDocument::getDocumentName([
-			$row['MODULE_ID'],
-			$row['ENTITY'],
-			$row['DOCUMENT_ID'],
+			$row['WS_MODULE_ID'],
+			$row['WS_ENTITY'],
+			$row['WS_DOCUMENT_ID'],
 		]);
 	}
 
 	static function getBpTemplateName($row, $templatesList)
 	{
-		return $row['WORKFLOW_TEMPLATE_ID'] && isset($templatesList[$row['WORKFLOW_TEMPLATE_ID']])
-			? $templatesList[$row['WORKFLOW_TEMPLATE_ID']]
+		return $row['WS_WORKFLOW_TEMPLATE_ID'] && isset($templatesList[$row['WS_WORKFLOW_TEMPLATE_ID']])
+			? $templatesList[$row['WS_WORKFLOW_TEMPLATE_ID']]
 			: null;
 	}
 
@@ -193,9 +193,9 @@ class CBpListEventHandlers
 	static function getBpDocumentUrl($row)
 	{
 		return CBPDocument::GetDocumentAdminPage([
-			$row['MODULE_ID'],
-			$row['ENTITY'],
-			$row['DOCUMENT_ID'],
+			$row['WS_MODULE_ID'],
+			$row['WS_ENTITY'],
+			$row['WS_DOCUMENT_ID'],
 		]);
 	}
 
@@ -204,13 +204,13 @@ class CBpListEventHandlers
 
 	static function getStartedBy($row)
 	{
-		if (!empty($row['STARTED_BY'])) {
+		if (!empty($row['WS_STARTED_BY'])) {
 			return CUser::FormatName(
 				"#LAST_NAME# #NAME# #SECOND_NAME#",
 				[
-					'LOGIN' => $row['STARTED_USER_LOGIN'],
-					'NAME' => $row['STARTED_USER_NAME'],
-					'LAST_NAME' => $row['STARTED_USER_LAST_NAME'],
+					'LOGIN' => $row['WS_STARTED_USER_LOGIN'],
+					'NAME' => $row['WS_STARTED_USER_NAME'],
+					'LAST_NAME' => $row['WS_STARTED_USER_LAST_NAME'],
 				],
 				true
 			) . " [" . $row['STARTED_BY'] . "]";
