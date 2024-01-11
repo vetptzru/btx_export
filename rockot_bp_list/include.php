@@ -27,7 +27,10 @@ class CBpListEventHandlers
 	{
 		$list = self::getFiltredBpList();
 		self::addHtmlSection("<pre>!!!!!!!!!!!!! I'm here !!!!!!!!!!!!</pre>");
-		self::addHtmlSection("<pre>".var_export($list, true)."</pre>");
+		$log = "<pre>".var_export($list, true)."</pre>";
+		self::addHtmlSection("<h4>???</h4>");
+		self::print("Done");
+		self::print($log);
 	}
 
 	// ------ HELPERS --------
@@ -134,10 +137,6 @@ class CBpListEventHandlers
 			'offset' => 0,
 		]);
 
-
-
-
-		self::print("Before while");
 
 		while ($row = $iterator->fetch()) {
 
