@@ -38,7 +38,8 @@ class CBpListEventHandlers
 		self::print($log);
 		$html = self::getHtmlByArray($list);
 		self::print($html);
-		self::addHtmlSection($html);
+		// self::addHtmlSection($html);
+		self::addHtmlSection("YYY");
 		self::print("Done");
 	}
 
