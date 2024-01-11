@@ -21,13 +21,13 @@ class CBpListEventHandlers
 
 	public static function OnProlog()
 	{
-		echo "<pre>wm0102wmPR</pre>";
+		// echo "<pre>wm0102wmPR</pre>";
 	}
 
 	public static function OnEpilog()
 	{
-		echo "<pre>wm0102wmEP</pre>";
-		
+		// echo "<pre>wm0102wmEP</pre>";
+
 		$urlInfo = self::getInfoByURL();
 		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
 			self::modifyBpListPage();
@@ -38,14 +38,14 @@ class CBpListEventHandlers
 	{
 		$list = self::getFiltredBpList();
 		// self::addHtmlSection("<pre>!!!!!!!!!!!!! I'm here !!!!!!!!!!!!</pre>");
-		$log = "<pre>" . var_export($list, true) . "</pre>";
+		// $log = "<pre>" . var_export($list, true) . "</pre>";
 		// self::addHtmlSection("<h4>???</h4>");
-		self::print($log);
+		// self::print($log);
 		$html = self::getHtmlByArray($list);
-		self::print($html);
+		// self::print($html);
 		self::addHtmlSection($html);
 		self::addHtmlSection("YYY");
-		self::print("Done");
+		// self::print("Done");
 	}
 
 	// ------ HELPERS --------
@@ -58,13 +58,13 @@ class CBpListEventHandlers
 			<table class="main-grid-table">
 				<thead class="main-grid-header">
 				<tr class="main-grid-row-head">
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Модуль</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Документ</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Дата изменения</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Завис</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Дата начала</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Запустил</th>
-					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable">Бизнесс процесс</th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Модуль</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Документ</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата изменения</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Завис</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Дата начала</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Запустил</span></th>
+					<th class="main-grid-cell-head main-grid-cell-left main-grid-col-no-sortable"><span class="main-grid-cell-head-container">Бизнесс процесс</span></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -72,13 +72,13 @@ class CBpListEventHandlers
 		foreach ($row as $item) {
 			$result.= '
 				<tr class="main-grid-row main-grid-row-body main-grid-cell main-grid-cell-left">
-					<td class="main-grid-cell main-grid-cell-left">Процесс/td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["_DOCUMENT_NAME"].'</td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["WS_STARTED_BY"].'</td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["WS_STARTED_BY"].'</td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["WS_STARTED_BY"].'</td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["_STARTED_BY"].'</td>
-					<td class="main-grid-cell main-grid-cell-left">'.$item["_TEMPLATE_NAME"].'</td>
+					<td class="main-grid-cell main-grid-cell-left">Процесс</td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_DOCUMENT_NAME"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["WS_STARTED_BY"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_STARTED_BY"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_TEMPLATE_NAME"].'</span></td>
 				</tr>
 			';
 		}
