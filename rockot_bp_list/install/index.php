@@ -40,7 +40,7 @@ Class rockot_bp_list extends CModule
 		$eventManager = \Bitrix\Main\EventManager::getInstance();
 		$eventManager->registerEventHandler("main", "OnBeforeProlog", "rockot_bp_list", "CBpListEventHandlers", "OnBeforeProlog", 50);		
 		$eventManager->registerEventHandler("main", "OnProlog", "rockot_bp_list", "CBpListEventHandlers", "OnProlog", 50);
-
+		$eventManager->registerEventHandler("main", "OnEpilog", "rockot_bp_list", "CBpListEventHandlers", "OnEpilog", 50);
 	}
 
 	public function installFiles() {
@@ -79,6 +79,7 @@ Class rockot_bp_list extends CModule
 		$eventManager = \Bitrix\Main\EventManager::getInstance();
 		$eventManager->unRegisterEventHandler("main", "OnBeforeProlog", "rockot_bp_list", "CBpListEventHandlers", "OnBeforeProlog");
 		$eventManager->unRegisterEventHandler("main", "OnProlog", "rockot_bp_list", "CBpListEventHandlers", "OnProlog");
+		$eventManager->unRegisterEventHandler("main", "OnEpilog", "rockot_bp_list", "CBpListEventHandlers", "OnEpilog");
 	}
 
 }
