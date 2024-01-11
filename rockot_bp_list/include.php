@@ -5,6 +5,7 @@ use Bitrix\Disk\Driver;
 use Bitrix\Bizproc\Activity\PropertiesDialog;
 use Bitrix\Bizproc\Workflow\Entity\WorkflowInstanceTable;
 use Bizproc\Workflow\Entity\WorkflowStateTable;
+use Bitrix\Bizproc;
 
 Loader::includeModule('disk');
 Loader::includeModule('crm');
