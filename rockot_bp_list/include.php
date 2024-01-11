@@ -63,7 +63,7 @@ class CBpListEventHandlers
 			$result.= '
 				<tr class="main-grid-row main-grid-row-body">
 					<td class="main-grid-cell main-grid-cell-center">Процесс</td>
-					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_DOCUMENT_NAME"].'</span></td>
+					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content"><a href="'.$item["_DOCUMENT_URL"].'">'.$item["_DOCUMENT_NAME"].'</a></span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_STARTED_BY"].'</span></td>
 					<td class="main-grid-cell main-grid-cell-left"><span class="main-grid-cell-content">'.$item["_TEMPLATE_NAME"].'</span></td>
 				</tr>
@@ -169,9 +169,9 @@ class CBpListEventHandlers
 		$iterator = WorkflowInstanceTable::getList([
 			'order' => [],
 			'select' => $select,
-			'filter' => ["WORKFLOW_TEMPLATE_ID" => 206], // $filter,
+			'filter' => ["WORKFLOW_TEMPLATE_ID" => [206, 20, 18, 110]], // $filter,
 			'limit' => 10,
-			'offset' => 0,
+			'offset' => 0
 		]);
 
 
