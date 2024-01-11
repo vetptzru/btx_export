@@ -39,7 +39,9 @@ class CBpListEventHandlers
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
 				const customCardHtml = `<?= $html ?>`;
-				const container = document.querySelector("#workarea-content");
+				// const container = document.querySelector("#workarea-content");
+				const container = document.querySelector(".workarea-content-paddings");
+				
 				if (container) {
 					// container.insertAdjacentHTML('beforeend', customCardHtml);
 					container.insertAdjacentHTML('afterbegin', customCardHtml);
@@ -150,7 +152,7 @@ class CBpListEventHandlers
 			$documentUrl = self::getBpDocumentUrl($row);
 			$row["DOCUMENT_URL"] = $documentUrl;
 
-			self::dump($row);
+			// self::dump($row);
 			$result[] = $row;
 		}
 		return $result;
