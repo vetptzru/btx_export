@@ -332,11 +332,17 @@ class CBpListEventHandlers
 		$workflows = [];
 		$size = 20;
 
+		self::print("doc: ".var_export($documentId, true));
+
 		$filter = [
-			'=MODULE_ID' => $documentId[0],
-			'=ENTITY' => $documentId[1],
+			// '=MODULE_ID' => $documentId[0],
+			// '=ENTITY' => $documentId[1],
+			// '=DOCUMENT_ID' => $documentId[2],
+			'=MODULE_ID' => "crm",
+			'=ENTITY' => "CCrmDocumentDeal",
 			'=DOCUMENT_ID' => $documentId[2],
 			'=INSTANCE.ID' => null,
+			'WORKFLOW_TEMPLATE_ID' => [206, 20, 18, 110]
 		];
 
 		// if ($ids) {
