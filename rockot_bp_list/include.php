@@ -134,6 +134,8 @@ class CBpListEventHandlers
 
 
 
+		self::print("Before while");
+
 		while ($row = $iterator->fetch()) {
 
 			$templateName = self::getBpTemplateName($row, $templateList);
