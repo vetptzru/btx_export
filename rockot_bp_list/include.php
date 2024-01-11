@@ -126,7 +126,7 @@ class CBpListEventHandlers
 		$iterator = WorkflowInstanceTable::getList([
 			'order' => [],
 			'select' => $select,
-			'filter' => ["WORKFLOW_TEMPLATE_ID" => 16], // $filter,
+			'filter' => ["WORKFLOW_TEMPLATE_ID" => 206], // $filter,
 			'limit' => 10,
 			'offset' => 0,
 		]);
