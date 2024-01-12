@@ -169,8 +169,9 @@ class CBpListEventHandlers
 		}
 		$documentType = [$payload["MODULE_ID"], $payload["ENTITY"], $payload["DOCUMENT_TYPE"]];
 		$documentId = [$payload["MODULE_ID"], $payload["ENTITY"], $payload["DOCUMENT_ID"]];
+		list($entity, $id) = explode("_", $payload["DOCUMENT_ID"]);
 
-		return ["type" => $documentType, "id" => $documentId];
+		return ["type" => $documentType, "id" => $documentId, "clean" => ["entity" => $entity, "id" => $id]];
 	}
 
 	private static function getPayload()
