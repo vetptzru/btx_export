@@ -45,11 +45,22 @@ class CBpListEventHandlers
 		self::print("003");
 		self::varPrint($document);
 		self::getBpListByDeal($document["id"]);
+		self::addHtmlInFrame();
 
 		self::print("004");
-		
+	}
+
+
+	private static function qqq($type, $id) {
+		if ($type != 'DEAL') {
+			return false;
+		}
+		$dealID = "D_$id";
 
 	}
+
+
+
 
 	private static function modifyBpListPage()
 	{
@@ -111,6 +122,23 @@ class CBpListEventHandlers
 				const customCardHtml = `<?= $html ?>`;
 				// const container = document.querySelector("#workarea-content");
 				const container = document.querySelector(".workarea-content-paddings");
+
+				if (container) {
+					container.insertAdjacentHTML('beforeend', customCardHtml);
+					// container.insertAdjacentHTML('afterbegin', customCardHtml);
+				}
+			});
+		</script>
+		<?
+	}
+
+	public static function addHtmlInFrame() {
+		?>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				const customCardHtml = `test`;
+				// const container = document.querySelector("#workarea-content");
+				const container = document.querySelector(".bizproc-page-document");
 
 				if (container) {
 					container.insertAdjacentHTML('beforeend', customCardHtml);
