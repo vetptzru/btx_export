@@ -24,13 +24,13 @@ class CBpListEventHandlers
 	public static function OnEpilog()
 	{
 
-		$urlInfo = self::getInfoByURL();
-		if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
-			self::modifyBpListPage();
-		}
+		// $urlInfo = self::getInfoByURL();
+		// if ($urlInfo["entity"] == $urlInfo["type"] && $urlInfo["type"] == "bizproc") {
+		// 	self::modifyBpListPage();
+		// }
 
 
-		/*
+		
 		if (!self::isNeededPage()) {
 			return;
 		}
@@ -43,10 +43,11 @@ class CBpListEventHandlers
 		}
 
 		self::print("003");
+		self::varPrint($document);
 		self::getBpListByDeal($document["id"]);
 
 		self::print("004");
-		*/
+		
 
 	}
 
@@ -137,6 +138,10 @@ class CBpListEventHandlers
 	static public function print($message)
 	{
 		file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/deb.log", $message . "\n", FILE_APPEND);
+	}
+
+	static public function varPrint($obj) {
+		self::print(var_export($obj, true));
 	}
 
 
