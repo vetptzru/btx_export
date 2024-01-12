@@ -47,6 +47,8 @@ class CBpListEventHandlers
 		self::getBpListByDeal($document["id"]);
 		self::addHtmlInFrame();
 
+		echo "asdadsasdasdasdasdasd";
+
 		self::print("004");
 	}
 
