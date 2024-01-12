@@ -78,7 +78,7 @@ class CBpListEventHandlers
 			['IBLOCK_NAME', 'ID', 'NAME', "DATE_CREATE", "IBLOCK_ID", "WF_STATUS_ID", "LOCK_STATUS", "USER_NAME", "PROPERTY_PROEKT"]
 		);
 
-		$html = '<ul class="bizproc-document-list bizproc-document-workflow-list-item">';
+		$html = '<h2 class="bizproc-document-section-title">Список БП</h2><ul class="bizproc-document-list bizproc-document-workflow-list-item">';
 
 		while ($element = $elements->GetNext()) {
 			// Обрабатываем каждый элемент и его свойства
