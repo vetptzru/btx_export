@@ -30,7 +30,7 @@ class CBpListEventHandlers
 		// }
 
 
-		
+
 		if (!self::isNeededPage()) {
 			return;
 		}
@@ -44,20 +44,58 @@ class CBpListEventHandlers
 
 		self::print("003");
 		self::varPrint($document);
-		self::getBpListByDeal($document["id"]);
-		self::addHtmlInFrame();
+		// self::getBpListByDeal($document["id"]);
+		// self::addHtmlInFrame();
 
-		echo "asdadsasdasdasdasdasd";
+		if (!isset($document["clean"]) || !$document["clean"]["entity"] || !$document["clean"]["id"]) {
+			return;
+		}
+
+
+		$table = self::htmlBpTable($document["clean"]["entity"], $document["clean"]["id"]);
+
+		if (!$table) {
+			return;
+		}
+
+		echo $table;
 
 		self::print("004");
 	}
 
 
-	private static function qqq($type, $id) {
+	private static function htmlBpTable($type, $id)
+	{
 		if ($type != 'DEAL') {
 			return false;
 		}
-		$dealID = "D_$id";
+		$dealId = "D_$id";
+		$elements = CIBlockElement::GetList(
+			[], // Критерии сортировки
+			["IBLOCK_ID" => [16, 41, 73], "PROPERTY_PROEKT" => $dealId],
+			false, // Параметры навигации
+			false, // Параметры выборки
+			['IBLOCK_NAME', 'ID', 'NAME', "DATE_CREATE", "IBLOCK_ID", "WF_STATUS_ID", "LOCK_STATUS", "USER_NAME", "PROPERTY_PROEKT"]
+		);
+
+		$html = '<ul class="bizproc-document-list bizproc-document-workflow-list-item">';
+
+		while ($element = $elements->GetNext()) {
+			// Обрабатываем каждый элемент и его свойства
+			// var_dump($element);
+			$html .= '<li class="bizproc-list-item bizproc-document-process bizproc-document-finished">';
+			$html .= '<table class="bizproc-table-main" cellpadding="0" border="0"><thead><tr><th colspan="2">
+					<span data-role="workflow-name">' . $element["IBLOCK_NAME"] . '</span></th></tr></thead><tbody><tr>
+					<td colspan="2">' . $element["NAME"] . '</td></tr><tr>
+					<td class="bizproc-field-name">Дата текущего состояния:</td>
+					<td class="bizproc-field-value">' . $element["DATE_CREATE"] . '</td></tr><tr>
+					<td class="bizproc-field-name">Текущий статус:</td>
+					<td class="bizproc-field-value">Завершен</td></tr></tbody></table>';
+			$html .= '</li>';
+		}
+
+		$html .= '</ul>';
+		return $html;
 
 	}
 
@@ -118,39 +156,40 @@ class CBpListEventHandlers
 
 	public static function addHtmlSection($html)
 	{
-		?>
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				const customCardHtml = `<?= $html ?>`;
-				// const container = document.querySelector("#workarea-content");
-				const container = document.querySelector(".workarea-content-paddings");
+		/*?>
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							const customCardHtml = `<?= $html ?>`;
+							// const container = document.querySelector("#workarea-content");
+							const container = document.querySelector(".workarea-content-paddings");
 
-				if (container) {
-					container.insertAdjacentHTML('beforeend', customCardHtml);
-					// container.insertAdjacentHTML('afterbegin', customCardHtml);
-				}
-			});
-		</script>
-		<?
+							if (container) {
+								container.insertAdjacentHTML('beforeend', customCardHtml);
+								// container.insertAdjacentHTML('afterbegin', customCardHtml);
+							}
+						});
+					</script>
+					<?*/
 	}
 
-	public static function addHtmlInFrame() {
+	public static function addHtmlInFrame()
+	{
 		self::print("ADD me");
-		?>
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				const customCardHtml = `test`;
-				// const container = document.querySelector("#workarea-content");
-				const container = document.querySelector(".bizproc-page-document");
-				console.log(container);
+		/*?>
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							const customCardHtml = `test`;
+							// const container = document.querySelector("#workarea-content");
+							const container = document.querySelector(".bizproc-page-document");
+							console.log(container);
 
-				if (container) {
-					container.insertAdjacentHTML('beforeend', customCardHtml);
-					// container.insertAdjacentHTML('afterbegin', customCardHtml);
-				}
-			});
-		</script>
-		<?
+							if (container) {
+								container.insertAdjacentHTML('beforeend', customCardHtml);
+								// container.insertAdjacentHTML('afterbegin', customCardHtml);
+							}
+						});
+					</script>
+					<?*/
 	}
 
 	/**
@@ -172,7 +211,8 @@ class CBpListEventHandlers
 		file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/deb.log", $message . "\n", FILE_APPEND);
 	}
 
-	static public function varPrint($obj) {
+	static public function varPrint($obj)
+	{
 		self::print(var_export($obj, true));
 	}
 
