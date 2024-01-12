@@ -133,12 +133,14 @@ class CBpListEventHandlers
 	}
 
 	public static function addHtmlInFrame() {
+		self::print("ADD me");
 		?>
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
 				const customCardHtml = `test`;
 				// const container = document.querySelector("#workarea-content");
 				const container = document.querySelector(".bizproc-page-document");
+				console.log(container);
 
 				if (container) {
 					container.insertAdjacentHTML('beforeend', customCardHtml);
