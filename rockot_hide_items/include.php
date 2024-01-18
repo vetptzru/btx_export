@@ -20,31 +20,28 @@ class CHideItemsEventHandlers
 	{
 		$urlInfo = self::getInfoByURL();
 
-		// $content = var_export($urlInfo, true);
-		// return; 
-		
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
 			$hiddenPrice = '';
-			
+
 			$newContent = $content;
-			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '".$hiddenPrice."'", $newContent);
-			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '".$hiddenPrice."'", $newContent);
+			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '" . $hiddenPrice . "'", $newContent);
 
 			// CRM
-			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_WITH_CURRENCY': '".$hiddenPrice."'", $newContent);
-			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY': '".$hiddenPrice."'", $newContent);
-			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY': '".$hiddenPrice."'", $newContent);
+			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_WITH_CURRENCY': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 
 			// Kanban
-			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '".$hiddenPrice."'", $newContent);
-			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '".$hiddenPrice."'", $newContent);
+			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
 
 
 			// Ajax
-			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "'.$hiddenPrice.'"', $newContent);
-			$newContent = preg_replace("/\\\"TOTAL_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"TOTAL_AMOUNT": "'.$hiddenPrice.'"', $newContent);
-			
+			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "' . $hiddenPrice . '"', $newContent);
+			$newContent = preg_replace("/\\\"TOTAL_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"TOTAL_AMOUNT": "' . $hiddenPrice . '"', $newContent);
+
 			$content = $newContent;
 		}
 	}
@@ -58,14 +55,27 @@ class CHideItemsEventHandlers
 		return false;
 	}
 
-	private static function checkUserAccess() {
+	private static function checkUserAccess()
+	{
 		global $USER;
-		$arGroups = CUser::GetUserGroup($USER->GetID());
-		$arGroups = CUser::GetUserGroup($USER->GetID());
-    if (in_array(self::$crmGroupId, $arGroups)) {
-        return true;
-    }
-		return false;
+		global $DB;
+
+		if (!$USER) {
+			return false;
+		}
+
+		$userId = "U" . $USER->GetID();
+		$roleId = self::$crmGroupId;
+		$result = false;
+
+		$strSql = "SELECT * FROM b_crm_role_relation WHERE RELATION = '$userId' AND ROLE_ID = $roleId";
+
+		$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
+		while ($arRes = $dbRes->Fetch()) {
+			$result = true;
+		}
+		return $result;
+
 	}
 
 	//---------
@@ -104,7 +114,8 @@ class CHideItemsEventHandlers
 	/**
 	 * Check is iframe page
 	 */
-	public static function isPageInIframe() {
+	public static function isPageInIframe()
+	{
 		$request = \Bitrix\Main\Context::getCurrent()->getRequest();
 		$queryList = $request->getQueryList()->toArray();
 		return $queryList["IFRAME"] == "Y";
