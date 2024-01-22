@@ -105,8 +105,9 @@ class CBpListEventHandlers
 		$html = '<h2 class="bizproc-document-section-title">Список БП</h2><ul class="bizproc-document-list bizproc-document-workflow-list-item">';
 
 		foreach ($bpList as $element) {
-			// Обрабатываем каждый элемент и его свойства
-			// var_dump($element);
+			
+			$status = $element['STATE'] == 'InProgress' ? 'В процессе' : 'Завершен';
+
 			$html .= '<li class="bizproc-list-item bizproc-document-process bizproc-document-finished">';
 			$html .= '<table class="bizproc-table-main" cellpadding="0" border="0"><thead><tr><th colspan="2">
 					<span data-role="workflow-name">' . $element["IBLOCK_NAME"] . '</span></th></tr></thead><tbody><tr>
@@ -114,14 +115,12 @@ class CBpListEventHandlers
 					<td class="bizproc-field-name">Дата текущего состояния:</td>
 					<td class="bizproc-field-value">' . $element["STARTED"] . '</td></tr><tr>
 					<td class="bizproc-field-name">Текущий статус:</td>
-					<td class="bizproc-field-value">'.$element["STATE_TITLE"].'</td></tr></tbody></table>';
+					<td class="bizproc-field-value">'.$status.' ('.$element["STATE_TITLE"].')</td></tr></tbody></table>';
 			$html .= '</li>';
 		}
 		$html .= '</ul>';
 
 		return $html;
-
-		return "";
 
 	}
 
