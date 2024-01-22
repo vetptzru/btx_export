@@ -126,6 +126,7 @@ class CBpListEventHandlers
 	}
 
 	private static function getAllBpsByDealId($dealId) {
+		global $DB;
 		$strSql = "
 			SELECT  
 				el.ID as ELEMENT_ID,
