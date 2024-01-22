@@ -99,6 +99,50 @@ class CBpListEventHandlers
 
 	}
 
+	private static function getAllBpsByDealId($dealId) {
+		$strSql = "
+			SELECT  
+				el.ID as ELEMENT_ID,
+				iblock.ID as IBLOCK_ID,
+				iblock.NAME as IBLOCK_NAME,
+				el.NAME,
+				ws.DOCUMENT_ID,
+				ws.WORKFLOW_TEMPLATE_ID,
+				ws.STATE,
+				ws.STATE_TITLE,
+				ws.STARTED,
+				ws.STARTED_BY,
+				prop.VALUE as PROP_PROJECT,
+				iblock_prop.CODE as PROP_CODE
+			FROM 
+				b_iblock_element AS el 
+			INNER JOIN 
+				b_bp_workflow_state AS ws 
+				ON el.ID = ws.DOCUMENT_ID
+			INNER JOIN 
+				b_iblock_element_property AS prop 
+				ON el.ID = prop.IBLOCK_ELEMENT_ID
+			INNER JOIN 
+				b_iblock_property AS iblock_prop
+				ON prop.IBLOCK_PROPERTY_ID = iblock_prop.ID
+			INNER JOIN 
+				b_iblock AS iblock
+				ON iblock.ID = el.IBLOCK_ID
+			WHERE 1
+				AND el.IBLOCK_ID IN (16, 41, 73)
+				AND iblock_prop.CODE = 'PROEKT'
+				AND prop.VALUE = '$dealId'
+				AND ws.STATE IN ('InProgress', 'Completed')
+			ORDER BY ws.STATE DESC
+			LIMIT 1000
+		";
+		$dbRes = $DB->Query($strSql);
+		$result = [];
+		while ($arRes = $dbRes->Fetch()) {
+			$result[] = $arRes;
+		}
+		return $result;
+	} 
 
 
 
