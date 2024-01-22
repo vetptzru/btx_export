@@ -102,6 +102,10 @@ class CBpListEventHandlers
 
 		$bpList = self::getAllBpsByDealId($dealId);
 
+		if (sizeof($bpList) == 0) {
+			return "";
+		}
+
 		$html = '<h2 class="bizproc-document-section-title">Список БП</h2><ul class="bizproc-document-list bizproc-document-workflow-list-item">';
 
 		foreach ($bpList as $element) {
