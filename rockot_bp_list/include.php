@@ -112,9 +112,9 @@ class CBpListEventHandlers
 					<span data-role="workflow-name">' . $element["IBLOCK_NAME"] . '</span></th></tr></thead><tbody><tr>
 					<td colspan="2">' . $element["NAME"] . '</td></tr><tr>
 					<td class="bizproc-field-name">Дата текущего состояния:</td>
-					<td class="bizproc-field-value">' . $element["DATE_CREATE"] . '</td></tr><tr>
+					<td class="bizproc-field-value">' . $element["STARTED"] . '</td></tr><tr>
 					<td class="bizproc-field-name">Текущий статус:</td>
-					<td class="bizproc-field-value">Завершен</td></tr></tbody></table>';
+					<td class="bizproc-field-value">'.$element["STATE_TITLE"].'</td></tr></tbody></table>';
 			$html .= '</li>';
 		}
 		$html .= '</ul>';
