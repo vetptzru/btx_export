@@ -70,6 +70,8 @@ class CBpListEventHandlers
 			return false;
 		}
 		$dealId = "D_$id";
+
+		/*
 		$elements = CIBlockElement::GetList(
 			[], // Критерии сортировки
 			["IBLOCK_ID" => [16, 41, 73], "PROPERTY_PROEKT" => $dealId],
@@ -96,6 +98,11 @@ class CBpListEventHandlers
 
 		$html .= '</ul>';
 		return $html;
+		*/
+
+		$bpList = self::getAllBpsByDealId($dealId);
+
+		return "";
 
 	}
 
