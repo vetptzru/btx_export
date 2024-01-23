@@ -59,12 +59,12 @@ class CHideItemsEventHandlers
 		}
 
 
+		$newContent = $content;
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
 			$hiddenPrice = '';
 
-			$newContent = $content;
 			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '" . $hiddenPrice . "'", $newContent);
 
