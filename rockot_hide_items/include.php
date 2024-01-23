@@ -74,8 +74,8 @@ class CHideItemsEventHandlers
 			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 
 			// Kanban
-			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
-			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'entity_price'\: [\w+\.]+'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'price_formatted'\: '[\w+\.]+'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
 
 
 			// Ajax
