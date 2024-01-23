@@ -17,7 +17,8 @@ class CHideItemsEventHandlers
 	private static $crmGroupId = 8;
 
 
-	public static function OnEpilog() {
+	public static function OnEpilog()
+	{
 		// global $APPLICATION;
 		// self::print("OnEpilog: BEGIN: ---------");
 		// self::print("OnEpilog: END: ---------");
@@ -49,23 +50,27 @@ class CHideItemsEventHandlers
 			self::varPrint(get_class_methods($APPLICATION));
 
 			// if ($APPLICATION->buffered) {
-				// $cc = $APPLICATION->EndBufferContent();
-				// self::varPrint($cc);
-				// $APPLICATION->StartBufferContent();
+			// $cc = $APPLICATION->EndBufferContent();
+			// self::varPrint($cc);
+			// $APPLICATION->StartBufferContent();
 
 			// }
 			self::print("OnEndBufferContent: END: ---------");
 
 		}
 
+		if (self::checkUserAccess()) {
+			return;
+		}
+
 
 		$newContent = $content;
 		$hiddenPrice = '';
-		
 
-		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
-			
+		if (self::shouldReplaceContent($urlInfo)) {
+
+
 
 			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '" . $hiddenPrice . "'", $newContent);
