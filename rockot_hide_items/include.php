@@ -33,7 +33,7 @@ class CHideItemsEventHandlers
 			// self::print("Input: ");
 			// self::varPrint(file_get_contents('php://input'));
 			self::print("App buffered: ");
-			self::varPrint($APPLICATION->buffered);
+			self::varPrint(get_class_methods($APPLICATION));
 
 			// if ($APPLICATION->buffered) {
 				// $cc = $APPLICATION->EndBufferContent();
