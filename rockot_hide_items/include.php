@@ -18,20 +18,20 @@ class CHideItemsEventHandlers
 
 
 	public static function OnEpilog() {
-		global $APPLICATION;
+		// global $APPLICATION;
 		// self::print("OnEpilog: BEGIN: ---------");
 		// self::print("OnEpilog: END: ---------");
-		$r = $APPLICATION->EndBufferContentMan(); 
-		self::varPrint($r);
-		echo $r;
+		// $r = $APPLICATION->EndBufferContentMan(); 
+		// self::varPrint($r);
+		// echo $r;
 	}
 
 	public static function OnEndBufferContent(&$content)
 	{
 
-		return;
+		// return;
 
-		$urlInfo = self::getInfoByURL();
+		// $urlInfo = self::getInfoByURL();
 
 		if ($_REQUEST['action'] == 'crmmobile.Controller.EntityDetails.load') {
 
