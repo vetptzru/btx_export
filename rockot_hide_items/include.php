@@ -20,6 +20,8 @@ class CHideItemsEventHandlers
 	{
 		$urlInfo = self::getInfoByURL();
 
+		self::varPrint($urlInfo);
+
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
 			$hiddenPrice = '';
@@ -119,5 +121,18 @@ class CHideItemsEventHandlers
 		$request = \Bitrix\Main\Context::getCurrent()->getRequest();
 		$queryList = $request->getQueryList()->toArray();
 		return $queryList["IFRAME"] == "Y";
+	}
+
+	/**
+	 * Log message in file
+	 */
+	static public function print($message)
+	{
+		file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/deb.log", $message . "\n", FILE_APPEND);
+	}
+
+	static public function varPrint($obj)
+	{
+		self::print(var_export($obj, true));
 	}
 }
