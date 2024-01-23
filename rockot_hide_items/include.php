@@ -75,11 +75,8 @@ class CHideItemsEventHandlers
 
 
 			// Kanban
-			$newContent = preg_replace("/[\\]?'entity_price[\\]?'\:[ ]*[\\]?'[\w+\.]+[\\]?'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
-			$newContent = preg_replace("/[\\]?'price_formatted[\\]?'\:[ ]*[\\]?'[\w+\.]+[\\]?'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
-
-			self::print("Kanban");
-			self::varPrint($newContent);
+			$newContent = preg_replace("/'entity_price'\: [\w+\.]+'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'price_formatted'\: '[\w+\.]+'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
 
 
 			// Ajax
@@ -91,8 +88,9 @@ class CHideItemsEventHandlers
 		if ($urlInfo["entity"] == "crm" && $urlInfo["type"] == "deal" && $urlInfo["id"]) {
 			// HTML
 			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\"[^>]{1,}>[&nbsp;0-9\.]{1,} руб\.<\/span>/iU", '<span class="main-grid-cell-content">' . $hiddenPrice . '</span>', $newContent);
-			$content = $newContent;
 		}
+
+		$content = $newContent;
 	}
 
 	public static function shouldReplaceContent($urlInfo)
