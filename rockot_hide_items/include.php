@@ -32,6 +32,7 @@ class CHideItemsEventHandlers
 		self::varPrint(file_get_contents('php://input'));
 		self::print("App buffered: ");
 		self::varPrint($APPLICATION->buffered);
+		self::varPrint($APPLICATION->buffer_content);
 		self::print("OnEndBufferContent: END: ---------");
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
