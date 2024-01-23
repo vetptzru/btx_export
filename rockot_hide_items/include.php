@@ -24,23 +24,23 @@ class CHideItemsEventHandlers
 
 			self::print("OnEndBufferContent: BEGIN: ---------");
 			global $APPLICATION;
-			self::print("UrlInfo: ");
-			self::varPrint($urlInfo);
-			self::print("Request: ");
-			self::varPrint($_REQUEST);
+			// self::print("UrlInfo: ");
+			// self::varPrint($urlInfo);
+			// self::print("Request: ");
+			// self::varPrint($_REQUEST);
 			self::print("Content: ");
 			self::varPrint($content);
-			self::print("Input: ");
-			self::varPrint(file_get_contents('php://input'));
+			// self::print("Input: ");
+			// self::varPrint(file_get_contents('php://input'));
 			self::print("App buffered: ");
 			self::varPrint($APPLICATION->buffered);
 
-			if ($APPLICATION->buffered) {
+			// if ($APPLICATION->buffered) {
 				// $cc = $APPLICATION->EndBufferContent();
 				// self::varPrint($cc);
 				// $APPLICATION->StartBufferContent();
 
-			}
+			// }
 			self::print("OnEndBufferContent: END: ---------");
 
 		}
