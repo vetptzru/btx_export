@@ -52,7 +52,7 @@ class CHideItemsEventHandlers
 
 		if ($urlInfo["entity"] == "crm" && $urlInfo["type"] == "deal" && $urlInfo["id"]) {
 			// HTML
-			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\".*руб\.<\/span>/iU", '<span class="main-grid-cell-content">'.$hiddenPrice.'</span>', $newContent);
+			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\"[^>]{1,}>[&nbsp;0-9]{1,} руб\.<\/span>/iU", '<span class="main-grid-cell-content">'.$hiddenPrice.'</span>', $newContent);
 			$content = $newContent;
 		}
 	}
