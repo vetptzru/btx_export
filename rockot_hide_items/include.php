@@ -73,9 +73,13 @@ class CHideItemsEventHandlers
 			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 
+
 			// Kanban
-			$newContent = preg_replace("/'entity_price'\: [\w+\.]+'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
-			$newContent = preg_replace("/'price_formatted'\: '[\w+\.]+'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'entity_price'\:[ ]*'[\w+\.]+'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
+			$newContent = preg_replace("/'price_formatted'\:[ ]*'[\w+\.]+'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
+
+			self::print("Kanban");
+			self::varPrint($newContent);
 
 
 			// Ajax
