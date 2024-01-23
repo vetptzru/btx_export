@@ -39,6 +39,7 @@ Class rockot_hide_items extends CModule
 	public function installEvents() {
 		$eventManager = \Bitrix\Main\EventManager::getInstance();
 		$eventManager->registerEventHandler("main", "OnEndBufferContent", "rockot_hide_items", "CHideItemsEventHandlers", "OnEndBufferContent", 50);
+		$eventManager->registerEventHandler("main", "OnBeforeEndBufferContent", "rockot_hide_items", "CHideItemsEventHandlers", "OnBeforeEndBufferContent", 50);
 	}
 
 	public function installFiles() {
@@ -76,6 +77,7 @@ Class rockot_hide_items extends CModule
 	public function uninstallEvents() {
 		$eventManager = \Bitrix\Main\EventManager::getInstance();
 		$eventManager->unRegisterEventHandler("main", "OnEndBufferContent", "rockot_hide_items", "CHideItemsEventHandlers", "OnEndBufferContent");
+		$eventManager->unRegisterEventHandler("main", "OnBeforeEndBufferContent", "rockot_hide_items", "CHideItemsEventHandlers", "OnBeforeEndBufferContent");
 	}
 
 }

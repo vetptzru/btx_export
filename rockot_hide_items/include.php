@@ -16,15 +16,26 @@ class CHideItemsEventHandlers
 
 	private static $crmGroupId = 8;
 
+
+	public static function OnBeforeEndBufferContent(&$content) {
+		$urlInfo = self::getInfoByURL();
+
+		self::print("OnBeforeEndBufferContent: BEGIN: ---------");
+		self::varPrint($urlInfo);
+		self::varPrint($_REQUEST);
+		self::varPrint($content);
+		self::print("OnBeforeEndBufferContent: END: ---------");
+	}
+
 	public static function OnEndBufferContent(&$content)
 	{
 		$urlInfo = self::getInfoByURL();
 
-		self::print("BEGIN: ---------");
+		self::print("OnEndBufferContent: BEGIN: ---------");
 		self::varPrint($urlInfo);
 		self::varPrint($_REQUEST);
 		self::varPrint($content);
-		self::print("END: ---------");
+		self::print("OnEndBufferContent: END: ---------");
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
