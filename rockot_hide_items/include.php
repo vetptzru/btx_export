@@ -23,7 +23,7 @@ class CHideItemsEventHandlers
 		self::print("OnEndBufferContent: BEGIN: ---------");
 		self::varPrint($urlInfo);
 		self::varPrint($_REQUEST);
-		self::varPrint($content);
+		// self::varPrint($content);
 		self::print("OnEndBufferContent: END: ---------");
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
@@ -47,6 +47,9 @@ class CHideItemsEventHandlers
 			// Ajax
 			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "' . $hiddenPrice . '"', $newContent);
 			$newContent = preg_replace("/\\\"TOTAL_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"TOTAL_AMOUNT": "' . $hiddenPrice . '"', $newContent);
+
+			// HTML
+			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\".*руб\.<\/span>/iU", "", $newContent);
 
 			$content = $newContent;
 		}
