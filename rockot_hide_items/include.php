@@ -20,20 +20,32 @@ class CHideItemsEventHandlers
 	{
 		$urlInfo = self::getInfoByURL();
 
-		self::print("OnEndBufferContent: BEGIN: ---------");
-		global $APPLICATION;
-		self::print("UrlInfo: ");
-		self::varPrint($urlInfo);
-		self::print("Request: ");
-		self::varPrint($_REQUEST);
-		self::print("Content: ");
-		self::varPrint($content);
-		self::print("Input: ");
-		self::varPrint(file_get_contents('php://input'));
-		self::print("App buffered: ");
-		self::varPrint($APPLICATION->buffered);
-		self::varPrint($APPLICATION->buffer_content);
-		self::print("OnEndBufferContent: END: ---------");
+		if ($_REQUEST['action'] == 'crmmobile.Controller.EntityDetails.load') {
+
+			self::print("OnEndBufferContent: BEGIN: ---------");
+			global $APPLICATION;
+			self::print("UrlInfo: ");
+			self::varPrint($urlInfo);
+			self::print("Request: ");
+			self::varPrint($_REQUEST);
+			self::print("Content: ");
+			self::varPrint($content);
+			self::print("Input: ");
+			self::varPrint(file_get_contents('php://input'));
+			self::print("App buffered: ");
+			self::varPrint($APPLICATION->buffered);
+
+			if ($APPLICATION->buffered) {
+				$cc = $APPLICATION->EndBufferContent();
+				self::varPrint($cc);
+				// $APPLICATION->StartBufferContent();
+
+			}
+			self::print("OnEndBufferContent: END: ---------");
+
+		}
+
+
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
@@ -61,7 +73,7 @@ class CHideItemsEventHandlers
 
 		if ($urlInfo["entity"] == "crm" && $urlInfo["type"] == "deal" && $urlInfo["id"]) {
 			// HTML
-			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\"[^>]{1,}>[&nbsp;0-9\.]{1,} руб\.<\/span>/iU", '<span class="main-grid-cell-content">'.$hiddenPrice.'</span>', $newContent);
+			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\"[^>]{1,}>[&nbsp;0-9\.]{1,} руб\.<\/span>/iU", '<span class="main-grid-cell-content">' . $hiddenPrice . '</span>', $newContent);
 			$content = $newContent;
 		}
 	}
