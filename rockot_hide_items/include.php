@@ -48,9 +48,11 @@ class CHideItemsEventHandlers
 			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "' . $hiddenPrice . '"', $newContent);
 			$newContent = preg_replace("/\\\"TOTAL_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"TOTAL_AMOUNT": "' . $hiddenPrice . '"', $newContent);
 
+		}
+
+		if ($urlInfo["entity"] == "crm" && $urlInfo["type"] == "deal" && $urlInfo["id"]) {
 			// HTML
 			$newContent = preg_replace("/<span class=\\\"main-grid-cell-content\\\".*руб\.<\/span>/iU", "", $newContent);
-
 			$content = $newContent;
 		}
 	}
