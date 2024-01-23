@@ -24,6 +24,7 @@ class CHideItemsEventHandlers
 		self::varPrint($urlInfo);
 		self::varPrint($_REQUEST);
 		self::varPrint($content);
+		self::varPrint(file_get_contents('php://input'));
 		self::print("OnEndBufferContent: END: ---------");
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
