@@ -29,10 +29,10 @@ class CBpListEventHandlers
 		// 	self::modifyBpListPage();
 		// }
 
-		self::print(">> BEGIN: ---------");
-		self::varPrint(self::getInfoByURL());
+		// self::print(">> BEGIN: ---------");
+		// self::varPrint(self::getInfoByURL());
 		// self::varPrint($content);
-		self::print(">> END: ---------");
+		// self::print(">> END: ---------");
 
 
 		if (!self::isNeededPage()) {

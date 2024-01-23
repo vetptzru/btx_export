@@ -22,6 +22,7 @@ class CHideItemsEventHandlers
 
 		self::print("BEGIN: ---------");
 		self::varPrint($urlInfo);
+		self::varPrint($_REQUEST);
 		self::varPrint($content);
 		self::print("END: ---------");
 
