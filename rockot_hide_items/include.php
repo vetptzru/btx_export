@@ -31,7 +31,7 @@ class CHideItemsEventHandlers
 
 		// return;
 
-		// $urlInfo = self::getInfoByURL();
+		$urlInfo = self::getInfoByURL();
 
 		if ($_REQUEST['action'] == 'crmmobile.Controller.EntityDetails.load') {
 
