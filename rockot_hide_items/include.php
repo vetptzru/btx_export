@@ -20,7 +20,10 @@ class CHideItemsEventHandlers
 	{
 		$urlInfo = self::getInfoByURL();
 
+		self::print("BEGIN: ---------");
 		self::varPrint($urlInfo);
+		self::varPrint($content);
+		self::print("END: ---------");
 
 		if (self::shouldReplaceContent($urlInfo) && !self::checkUserAccess()) {
 
