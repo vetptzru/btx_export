@@ -36,8 +36,8 @@ class CHideItemsEventHandlers
 			self::varPrint($APPLICATION->buffered);
 
 			if ($APPLICATION->buffered) {
-				$cc = $APPLICATION->EndBufferContent();
-				self::varPrint($cc);
+				// $cc = $APPLICATION->EndBufferContent();
+				// self::varPrint($cc);
 				// $APPLICATION->StartBufferContent();
 
 			}
