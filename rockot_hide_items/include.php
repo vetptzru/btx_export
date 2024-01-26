@@ -35,12 +35,12 @@ class CHideItemsEventHandlers
 
 		$urlInfo = self::getInfoByURL();
 
-		if ($_REQUEST['action'] == 'crm.timeline.comment.load') {
+		// if ($_REQUEST['action'] == 'crm.timeline.comment.load') {
 
-			$content = preg_replace("/\\\"html\\\"\:[ ]*\\\'.*\\\"/iU", 'html: ""', $content);
+		// 	$content = preg_replace("/\\\"html\\\"\:[ ]*\\\'.*\\\"/iU", 'html: ""', $content);
 
-			return;
-		}
+		// 	return;
+		// }
 
 		if (self::checkUserAccess()) {
 			return;
