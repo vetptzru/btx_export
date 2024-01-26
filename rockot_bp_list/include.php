@@ -167,7 +167,7 @@ class CBpListEventHandlers
 				AND iblock_prop.CODE = 'PROEKT'
 				AND prop.VALUE = '$dealId'
 				AND ws.STATE IN ('InProgress', 'Completed')
-			ORDER BY ws.STATE DESC
+			ORDER BY ws.STATE DESC, ws.STARTED DESC
 			LIMIT 1000
 		";
 		$dbRes = $DB->Query($strSql);
