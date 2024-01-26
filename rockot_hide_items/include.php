@@ -30,33 +30,16 @@ class CHideItemsEventHandlers
 	public static function OnEndBufferContent(&$content)
 	{
 
-		// return;
+		$newContent = $content;
+		$hiddenPrice = '';
 
 		$urlInfo = self::getInfoByURL();
 
-		if ($_REQUEST['action'] == 'crmmobile.Controller.EntityDetails.load') {
+		if ($_REQUEST['action'] == 'crm.timeline.comment.load') {
 
-			self::print("OnEndBufferContent: BEGIN: ---------");
-			global $APPLICATION;
-			// self::print("UrlInfo: ");
-			// self::varPrint($urlInfo);
-			// self::print("Request: ");
-			// self::varPrint($_REQUEST);
-			self::print("Content: ");
-			self::varPrint($content);
-			// self::print("Input: ");
-			// self::varPrint(file_get_contents('php://input'));
-			self::print("App buffered: ");
-			self::varPrint(get_class_methods($APPLICATION));
+			$content = preg_replace("/\\\"html\\\"\:[ ]*\\\'.*\\\"/iU", 'html: ""', $content);
 
-			// if ($APPLICATION->buffered) {
-			// $cc = $APPLICATION->EndBufferContent();
-			// self::varPrint($cc);
-			// $APPLICATION->StartBufferContent();
-
-			// }
-			self::print("OnEndBufferContent: END: ---------");
-
+			return;
 		}
 
 		if (self::checkUserAccess()) {
@@ -64,8 +47,8 @@ class CHideItemsEventHandlers
 		}
 
 
-		$newContent = $content;
-		$hiddenPrice = '';
+		// $newContent = $content;
+		// $hiddenPrice = '';
 
 
 		if (self::shouldReplaceContent($urlInfo)) {
