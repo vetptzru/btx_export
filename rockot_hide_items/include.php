@@ -35,6 +35,10 @@ class CHideItemsEventHandlers
 
 		$urlInfo = self::getInfoByURL();
 
+		// echo "<pre>";
+		// var_dump(self::getApplicationPage());
+		// die();
+
 		// if ($_REQUEST['action'] == 'crm.timeline.comment.load') {
 
 		// 	$content = preg_replace("/\\\"html\\\"\:[ ]*\\\'.*\\\"/iU", 'html: ""', $content);
@@ -46,11 +50,33 @@ class CHideItemsEventHandlers
 			return;
 		}
 
+		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.timeline/ajax.php") {
+			$json = json_decode($content);
+			$result = [];
+			foreach($json->HISTORY_ITEMS as $item) {
+				if (
+					isset($item->layout) &&
+					isset($item->layout->icon) &&
+					isset($item->layout->icon->code) &&
+					$item->layout->icon->code == 'comment'
+				) {
+					continue;
+				}
+				$result[] = $item;
+			}
+			$json->HISTORY_ITEMS = $result;
+
+			$content = json_encode($json);
+
+			return;
+		}
+
 
 		// $newContent = $content;
 		// $hiddenPrice = '';
 
 
+		// if ($urlInfo[""])
 
 
 
@@ -154,10 +180,14 @@ class CHideItemsEventHandlers
 	 */
 	private static function getInfoByURL()
 	{
-		global $APPLICATION;
-		$currentUrl = $APPLICATION->GetCurPage();
+		$currentUrl = self::getApplicationPage();
 		$result = self::getUrlInfoByString($currentUrl);
 		return $result;
+	}
+
+	private static function getApplicationPage() {
+		global $APPLICATION;
+		return $APPLICATION->GetCurPage();
 	}
 
 	/**
