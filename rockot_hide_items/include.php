@@ -55,7 +55,10 @@ class CHideItemsEventHandlers
 
 
 		if (self::shouldHideComments($urlInfo)) {
-			if (preg_match("/historyData: (\[.*\}\]),/iU", $newContent, $out)) {
+			if (preg_match("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", $newContent, $out)) {
+				// echo "<pre>";
+				// var_dump($out);
+
 				$json = json_decode('{"list":' . $out[1] . '}');
 				$result = [];
 				foreach ($json->list as $list) {
@@ -71,8 +74,9 @@ class CHideItemsEventHandlers
 				}
 
 				$jsonOut = json_encode($result);
-				$newContent = preg_replace("/historyData: (\[.*\}\]),/iU", "historyData: " . $jsonOut . ",", $newContent);
+				$newContent = preg_replace("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", "historyData: " . $jsonOut . ",historyNavigation", $newContent);
 			}
+			// die();
 		}
 
 		if (self::shouldReplaceContent($urlInfo)) {
