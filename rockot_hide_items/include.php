@@ -52,8 +52,17 @@ class CHideItemsEventHandlers
 
 		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.timeline/ajax.php") {
 			$json = json_decode($content);
+
+			if (!$json) {
+				return;
+			}
+
+			if (!$json->HISTORY_ITEMS) {
+				return;
+			}
+
 			$result = [];
-			foreach($json->HISTORY_ITEMS as $item) {
+			foreach ($json->HISTORY_ITEMS as $item) {
 				if (
 					isset($item->layout) &&
 					isset($item->layout->icon) &&
@@ -185,7 +194,8 @@ class CHideItemsEventHandlers
 		return $result;
 	}
 
-	private static function getApplicationPage() {
+	private static function getApplicationPage()
+	{
 		global $APPLICATION;
 		return $APPLICATION->GetCurPage();
 	}
