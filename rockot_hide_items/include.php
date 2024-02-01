@@ -51,9 +51,31 @@ class CHideItemsEventHandlers
 		// $hiddenPrice = '';
 
 
+
+
+
+		if (self::shouldHideComments($urlInfo)) {
+			if (preg_match("/historyData: (\[.*\}\]),/iU", $newContent, $out)) {
+				$json = json_decode('{"list":' . $out[1] . '}');
+				$result = [];
+				foreach ($json->list as $list) {
+					if (
+						isset($list->layout) &&
+						isset($list->layout->icon) &&
+						isset($list->layout->icon->code) &&
+						$list->layout->icon->code == 'comment'
+					) {
+						continue;
+					}
+					$result[] = $list;
+				}
+
+				$jsonOut = json_encode($result);
+				$newContent = preg_replace("/historyData: (\[.*\}\]),/iU", "historyData: " . $jsonOut . ",", $newContent);
+			}
+		}
+
 		if (self::shouldReplaceContent($urlInfo)) {
-
-
 
 			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '" . $hiddenPrice . "'", $newContent);
@@ -85,8 +107,15 @@ class CHideItemsEventHandlers
 
 	public static function shouldReplaceContent($urlInfo)
 	{
-		// if ($urlInfo["type"] == "deal" && $urlInfo["id"] > 0 && $urlInfo["isIframe"]) {
 		if ($urlInfo["type"] == "deal") {
+			return true;
+		}
+		return false;
+	}
+
+	private static function shouldHideComments($urlInfo)
+	{
+		if ($urlInfo["type"] == "deal" && $urlInfo["id"] > 0 && $urlInfo["isIframe"]) {
 			return true;
 		}
 		return false;

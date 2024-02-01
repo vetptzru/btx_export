@@ -73,7 +73,7 @@ class CRockotEventHandlers
 			RockotDeal::addLinkToMenu($links["group"], "Проект");
 		}
 		if ($links["disk"]) {
-			RockotDeal::addLinkToMenu($links["disk"], "Диск");	
+			RockotDeal::addLinkToMenu($links["disk"], "Папка сделки");	
 		}
 		
 		// Asset::getInstance()->addJs("/bitrix/js/rockot_links_crm/script.js", true);
