@@ -90,28 +90,8 @@ class CHideItemsEventHandlers
 
 
 		if (self::shouldHideComments($urlInfo)) {
-			if (preg_match("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", $newContent, $out)) {
-				// echo "<pre>";
-				// var_dump($out);
-
-				$json = json_decode('{"list":' . $out[1] . '}');
-				$result = [];
-				foreach ($json->list as $list) {
-					if (
-						isset($list->layout) &&
-						isset($list->layout->icon) &&
-						isset($list->layout->icon->code) &&
-						$list->layout->icon->code == 'comment'
-					) {
-						continue;
-					}
-					$result[] = $list;
-				}
-
-				$jsonOut = json_encode($result);
-				$newContent = preg_replace("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", "historyData: " . $jsonOut . ",historyNavigation", $newContent);
-			}
-			// die();
+			$newContent = self::replaceHistoryDataComment($newContent);
+			$newContent = self::replaceFixedDataComment($newContent);
 		}
 
 		if (self::shouldReplaceContent($urlInfo)) {
@@ -181,6 +161,50 @@ class CHideItemsEventHandlers
 		}
 		return $result;
 
+	}
+
+	private static function replaceHistoryDataComment($newContent) {
+		if (preg_match("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", $newContent, $out)) {
+			$json = json_decode('{"list":' . $out[1] . '}');
+			$result = [];
+			foreach ($json->list as $list) {
+				if (
+					isset($list->layout) &&
+					isset($list->layout->icon) &&
+					isset($list->layout->icon->code) &&
+					$list->layout->icon->code == 'comment'
+				) {
+					continue;
+				}
+				$result[] = $list;
+			}
+
+			$jsonOut = json_encode($result);
+			$newContent = preg_replace("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", "historyData: " . $jsonOut . ",historyNavigation", $newContent);
+		}
+		return $newContent;
+	}
+
+	private static function replaceFixedDataComment($newContent) {
+		if (preg_match("/fixedData: (\[.*\}\]),[ \t\n]{1,}ajaxId/iU", $newContent, $out)) {
+			$json = json_decode('{"list":' . $out[1] . '}');
+			$result = [];
+			foreach ($json->list as $list) {
+				if (
+					isset($list->layout) &&
+					isset($list->layout->icon) &&
+					isset($list->layout->icon->code) &&
+					$list->layout->icon->code == 'comment'
+				) {
+					continue;
+				}
+				$result[] = $list;
+			}
+
+			$jsonOut = json_encode($result);
+			$newContent = preg_replace("/fixedData: (\[.*\}\]),[ \t\n]{1,}ajaxId/iU", "historyData: " . $jsonOut . ",historyNavigation", $newContent);
+		}
+		return $newContent;
 	}
 
 	//---------
