@@ -96,6 +96,8 @@ class CHideItemsEventHandlers
 
 		if (self::shouldReplaceContent($urlInfo)) {
 
+			// var_dump("asd");die();
+
 			$newContent = preg_replace("/'OPPORTUNITY'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'OPPORTUNITY_ACCOUNT'\:[ ]*'[0-9]{1,}\.[0-9]{1,}'/iU", "'OPPORTUNITY_ACCOUNT': '" . $hiddenPrice . "'", $newContent);
 
@@ -104,11 +106,12 @@ class CHideItemsEventHandlers
 			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY_ACCOUNT_WITH_CURRENCY': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'FORMATTED_OPPORTUNITY'\:[ ]*'[^']{1,}'/iU", "'FORMATTED_OPPORTUNITY': '" . $hiddenPrice . "'", $newContent);
 
-
 			// Kanban
+			$newContent = preg_replace("/'price'\:[ ]*[^,]{1,}/iU", "'entity_price': " . $hiddenPrice . ",", $newContent);
 			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
-
+			// $newContent = preg_replace("/'value': '5207077.01, RUB'/", "", $newContent);
+			// var_dump(self::getApplicationPage());die();
 
 			// Ajax
 			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "' . $hiddenPrice . '"', $newContent);
