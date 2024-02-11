@@ -100,7 +100,7 @@ class CHideItemsEventHandlers
 			// var_dump($jd->items);
 
 			foreach($jd->items as $index => $item) {
-				var_dump($jd->items[$index]);
+				var_dump($jd->items[$index]->price);
 				// $jd["items"][$index]["price"] = '';
 				// $jd["items"][$index]["price_formatted"] = '';
 				// $jd["items"][$index]["entity_price"] = '';
