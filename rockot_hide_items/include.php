@@ -99,15 +99,17 @@ class CHideItemsEventHandlers
 
 			// var_dump($jd->items);
 
-			foreach($jd->items as $index => $item) {
-				var_dump($jd->items[$index]->data->price);
-				// $jd["items"][$index]["price"] = '';
-				// $jd["items"][$index]["price_formatted"] = '';
-				// $jd["items"][$index]["entity_price"] = '';
+			foreach($jd->items as $index => $item) {			
+				$jd->items[$index]->data->price = '';
+				$jd->items[$index]->data->price_formatted = '';
+				$jd->items[$index]->data->entity_price = '';
 			}
 			//--
 			// var_dump($jd);
-			die();
+			// die();
+			$newContent = json_encode($jd);
+			$content = $newContent;
+			return;
 		}
 
 
