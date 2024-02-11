@@ -88,6 +88,10 @@ class CHideItemsEventHandlers
 		// if ($urlInfo[""])
 
 
+		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.kanban/ajax.old.php") {
+			// $newContent = preg_replace("//", '', $newContent);
+		}
+
 
 		if (self::shouldHideComments($urlInfo)) {
 			$newContent = self::replaceHistoryDataComment($newContent);
@@ -111,6 +115,7 @@ class CHideItemsEventHandlers
 			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'value'\:[ ]*'[^']{1,} RUB'/iU", "'value': ''", $newContent);
+			// self::getApplicationPage
 
 
 			// Ajax
