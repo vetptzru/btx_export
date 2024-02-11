@@ -35,17 +35,6 @@ class CHideItemsEventHandlers
 
 		$urlInfo = self::getInfoByURL();
 
-		// echo "<pre>";
-		// var_dump(self::getApplicationPage());
-		// die();
-
-		// if ($_REQUEST['action'] == 'crm.timeline.comment.load') {
-
-		// 	$content = preg_replace("/\\\"html\\\"\:[ ]*\\\'.*\\\"/iU", 'html: ""', $content);
-
-		// 	return;
-		// }
-
 		if (self::checkUserAccess()) {
 			return;
 		}
@@ -81,32 +70,19 @@ class CHideItemsEventHandlers
 		}
 
 
-		// $newContent = $content;
-		// $hiddenPrice = '';
-
-
-		// if ($urlInfo[""])
-
-
 		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.kanban/ajax.old.php") {
 			$jd = json_decode(str_replace("'", '"', $newContent));
-			//--
+			
 			if (!$jd) {
 				return;
 			}
-			//--
-			// $res = [];
-
-			// var_dump($jd->items);
 
 			foreach($jd->items as $index => $item) {			
 				$jd->items[$index]->data->price = '';
 				$jd->items[$index]->data->price_formatted = '';
 				$jd->items[$index]->data->entity_price = '';
 			}
-			//--
-			// var_dump($jd);
-			// die();
+
 			$newContent = json_encode($jd);
 			$content = $newContent;
 			return;
@@ -130,13 +106,10 @@ class CHideItemsEventHandlers
 
 
 			// Kanban
-			// 'value': '5207077.01, RUB'
 			$newContent = preg_replace("/'price'\:[ ]*[^,]{1,},/iU", "'price': " . $hiddenPrice . "'',", $newContent);
 			$newContent = preg_replace("/'entity_price'\:[ ]*'[^']{1,}'/iU", "'entity_price': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'price_formatted'\:[ ]*'[^']{1,}'/iU", "'price_formatted': '" . $hiddenPrice . "'", $newContent);
 			$newContent = preg_replace("/'value'\:[ ]*'[^']{1,} RUB'/iU", "'value': ''", $newContent);
-			// self::getApplicationPage
-
 
 			// Ajax
 			$newContent = preg_replace("/\\\"ENTITY_AMOUNT\\\"\:[ ]*[0-9]{1,}\.[0-9]{1,}/iU", '"ENTITY_AMOUNT": "' . $hiddenPrice . '"', $newContent);
