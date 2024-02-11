@@ -97,15 +97,15 @@ class CHideItemsEventHandlers
 			//--
 			// $res = [];
 
-			var_dump($jd->items);
+			// var_dump($jd->items);
 
-			// foreach($jd["items"] as $index => $item) {
-			// 	$jd["items"][$index]["price"] = '';
-			// 	$jd["items"][$index]["price_formatted"] = '';
-			// 	$jd["items"][$index]["entity_price"] = '';
-			// }
+			foreach($jd->items as $index => $item) {
+				$jd["items"][$index]["price"] = '';
+				$jd["items"][$index]["price_formatted"] = '';
+				$jd["items"][$index]["entity_price"] = '';
+			}
 			//--
-			var_dump($jd);
+			// var_dump($jd);
 			die();
 		}
 
