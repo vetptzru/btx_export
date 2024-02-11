@@ -89,7 +89,21 @@ class CHideItemsEventHandlers
 
 
 		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.kanban/ajax.old.php") {
-			// $newContent = preg_replace("//", '', $newContent);
+			$jd = json_decode(str_replace("'", '"', $newContent));
+			//--
+			if (!$jd) {
+				return;
+			}
+			//--
+			// $res = [];
+			foreach($jd["items"] as $index => $item) {
+				$jd["items"][$index]["price"] = '';
+				$jd["items"][$index]["price_formatted"] = '';
+				$jd["items"][$index]["entity_price"] = '';
+			}
+			//--
+			var_dump($jd);
+			die();
 		}
 
 
