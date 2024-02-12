@@ -72,12 +72,12 @@ class CHideItemsEventHandlers
 
 		if (self::getApplicationPage() == "/bitrix/components/bitrix/crm.kanban/ajax.old.php") {
 			$jd = json_decode(str_replace("'", '"', $newContent));
-			
+
 			if (!$jd) {
 				return;
 			}
 
-			foreach($jd->items as $index => $item) {			
+			foreach ($jd->items as $index => $item) {
 				$jd->items[$index]->data->price = '';
 				$jd->items[$index]->data->price_formatted = '';
 				$jd->items[$index]->data->entity_price = '';
@@ -154,7 +154,11 @@ class CHideItemsEventHandlers
 		$roleId = self::$crmGroupId;
 		$result = false;
 
-		$strSql = "SELECT * FROM b_crm_role_relation WHERE RELATION = '$userId' AND ROLE_ID = $roleId";
+		$ids = self::getDeps();
+		$ids[] = $userId;
+		$idsString = join(", ", $ids);
+
+		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (".$idsString.")";
 
 		$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
 		while ($arRes = $dbRes->Fetch()) {
@@ -164,7 +168,24 @@ class CHideItemsEventHandlers
 
 	}
 
-	private static function replaceHistoryDataComment($newContent) {
+	private static function getDeps()
+	{
+		global $USER;
+		$result = [];
+		$rsUser = CUser::GetByID($USER->GetID());
+		$arUser = $rsUser->Fetch();
+
+		if ($arUser["UF_DEPARTMENT"] && sizeof($arUser["UF_DEPARTMENT"]) > 0) {
+			foreach ($arUser["UF_DEPARTMENT"] as $dep) {
+				$result[] = "DR" . $dep;
+			}
+		}
+
+		return $result;
+	}
+
+	private static function replaceHistoryDataComment($newContent)
+	{
 		if (preg_match("/historyData: (\[.*\}\]),[ \t\n]{1,}historyNavigation/iU", $newContent, $out)) {
 			$json = json_decode('{"list":' . $out[1] . '}');
 			$result = [];
@@ -186,7 +207,8 @@ class CHideItemsEventHandlers
 		return $newContent;
 	}
 
-	private static function replaceFixedDataComment($newContent) {
+	private static function replaceFixedDataComment($newContent)
+	{
 		if (preg_match("/fixedData: (\[.*\}\]),[ \t\n]{1,}ajaxId/iU", $newContent, $out)) {
 			$json = json_decode('{"list":' . $out[1] . '}');
 			$result = [];
