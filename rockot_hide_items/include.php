@@ -156,9 +156,18 @@ class CHideItemsEventHandlers
 
 		$ids = self::getDeps();
 		$ids[] = $userId;
-		$idsString = join(", ", $ids);
+		
+		$_str = '';
 
-		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (".$idsString.")";
+		foreach($ids as $id) {
+			if ($_str == '') {
+				$_str.= "'$id'";
+				continue;
+			}
+			$_str.= ", '$id'";
+		}
+
+		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (".$_str.")";
 
 		$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
 		while ($arRes = $dbRes->Fetch()) {
