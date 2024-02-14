@@ -150,24 +150,25 @@ class CHideItemsEventHandlers
 			return false;
 		}
 
-		$userId = "U" . $USER->GetID();
+
 		$roleId = self::$crmGroupId;
 		$result = false;
 
 		$ids = self::getDeps();
-		$ids[] = $userId;
-		
+		$ids[] = "U" . $USER->GetID();
+		$ids[] = "IU" . $USER->GetID();
+
 		$_str = '';
 
-		foreach($ids as $id) {
+		foreach ($ids as $id) {
 			if ($_str == '') {
-				$_str.= "'$id'";
+				$_str .= "'$id'";
 				continue;
 			}
-			$_str.= ", '$id'";
+			$_str .= ", '$id'";
 		}
 
-		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (".$_str.")";
+		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (" . $_str . ")";
 
 		$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
 		while ($arRes = $dbRes->Fetch()) {
