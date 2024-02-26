@@ -143,6 +143,14 @@ class CHideItemsEventHandlers
 
 	private static function checkUserAccess()
 	{
+
+		$prem = CCrmRole::GetRolePerms(8);
+		if (isset($prem["CONFIG"]["WRITE"]["-"]) && $prem["CONFIG"]["WRITE"]["-"] == "X") {
+			return true;
+		}
+		return false;
+
+		/*
 		global $USER;
 		global $DB;
 
@@ -175,6 +183,7 @@ class CHideItemsEventHandlers
 			$result = true;
 		}
 		return $result;
+		*/
 
 	}
 
