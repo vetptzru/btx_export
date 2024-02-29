@@ -145,7 +145,7 @@ class CHideItemsEventHandlers
 	{
 
 		$prem = CCrmRole::GetRolePerms(8);
-		if (isset($prem["CONFIG"]["WRITE"]["-"]) && $prem["CONFIG"]["WRITE"]["-"] == "X") {
+		if ($prem != null && isset($prem["CONFIG"]["WRITE"]["-"]) && $prem["CONFIG"]["WRITE"]["-"] == "X") {
 			return true;
 		}
 		return false;
