@@ -6,6 +6,8 @@ use Bitrix\Bizproc\Activity\PropertiesDialog;
 use Bitrix\Bizproc\Workflow\Entity\WorkflowInstanceTable;
 use Bizproc\Workflow\Entity\WorkflowStateTable;
 use Bitrix\Bizproc;
+use Bitrix\Crm\RoleTable;
+use Bitrix\Crm\Security\Role\Model\RoleRelationTable;
 
 Loader::includeModule('disk');
 Loader::includeModule('crm');
@@ -143,51 +145,107 @@ class CHideItemsEventHandlers
 
 	private static function checkUserAccess()
 	{
+		global $USER;
 
-		$prem = CCrmRole::GetRolePerms(8);
-		if ($prem == null) {
-			return false;
-		}
-		if (isset($prem["CONFIG"]["WRITE"]["-"]) && $prem["CONFIG"]["WRITE"]["-"] == "X") {
-			return true;
-		}
-		return false;
+		$userId = $USER->GetId();
+		$roleId = self::$crmGroupId;
+
+		return self::isUserInGrpup($userId, $roleId);
+
+		// $prem = CCrmRole::GetRolePerms(8);
+		// if ($prem == null) {
+		// 	return false;
+		// }
+
+		// if (isset($prem["CONFIG"]["WRITE"]["-"]) && $prem["CONFIG"]["WRITE"]["-"] == "X") {
+		// 	return true;
+		// }
+
+		// return false;
 
 		/*
-		global $USER;
-		global $DB;
+			global $USER;
+			global $DB;
 
-		if (!$USER) {
-			return false;
-		}
-
-
-		$roleId = self::$crmGroupId;
-		$result = false;
-
-		$ids = self::getDeps();
-		$ids[] = "U" . $USER->GetID();
-		$ids[] = "IU" . $USER->GetID();
-
-		$_str = '';
-
-		foreach ($ids as $id) {
-			if ($_str == '') {
-				$_str .= "'$id'";
-				continue;
+			if (!$USER) {
+				return false;
 			}
-			$_str .= ", '$id'";
+
+
+			$roleId = self::$crmGroupId;
+			$result = false;
+
+			$ids = self::getDeps();
+			$ids[] = "U" . $USER->GetID();
+			$ids[] = "IU" . $USER->GetID();
+
+			$_str = '';
+
+			foreach ($ids as $id) {
+				if ($_str == '') {
+					$_str .= "'$id'";
+					continue;
+				}
+				$_str .= ", '$id'";
+			}
+
+			$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (" . $_str . ")";
+
+			$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
+			while ($arRes = $dbRes->Fetch()) {
+				$result = true;
+			}
+			return $result;
+			*/
+
+	}
+
+	public static function isUserInGrpup($userId, $roleId)
+	{
+		$roles = self::getCrmUserRoles($userId);
+		foreach ($roles as $role) {
+			if ($role["ROLE_ID"] == $roleId) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static function getCrmUserRoles($userId)
+	{
+		$userAccessCodes = \Bitrix\Crm\Service\Container::getInstance()
+			->getUserPermissions($userId)
+			->getAttributesProvider()
+			->getUserAttributesCodes()
+		;
+
+		$result = [];
+
+		if (!empty($userAccessCodes)) {
+			$rolesRelations = RoleRelationTable::getList([
+				'filter' => [
+					'@RELATION' => $userAccessCodes,
+				],
+				'select' => [
+					'ROLE_ID',
+					'NAME' => 'ROLE.NAME'
+				],
+				'runtime' => [
+					'ROLE' => [
+						'data_type' => '\Bitrix\Crm\RoleTable',
+						'reference' => [
+							'=ref.ID' => 'this.ROLE_ID',
+						],
+						'join_type' => 'inner'
+					]
+				],
+			]);
+			while ($roles = $rolesRelations->fetch()) {
+				$result[] = $roles;
+			}
 		}
 
-		$strSql = "SELECT * FROM b_crm_role_relation WHERE ROLE_ID = $roleId AND RELATION in (" . $_str . ")";
-
-		$dbRes = $DB->Query($strSql, false, "File: " . __FILE__ . "<br>Line: " . __LINE__);
-		while ($arRes = $dbRes->Fetch()) {
-			$result = true;
-		}
 		return $result;
-		*/
-
 	}
 
 	private static function getDeps()
